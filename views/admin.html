@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina administrado</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="public/css/adminEstilos.css">
+</head>
+
+<body>
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <aside id="sidebar">
+        <div class="perfil">
+            <img src="/views/public/images/fondo.png" alt="" width="100px" height="100px">
+            <h3>nombre usuario</h3>
+        </div>
+        <ul>
+            <li><a href="#principal">Inicio</a></li>
+            <li><a href="#usuarios">Usuarios</a></li>
+            <li><a href="#conductores">Conductores</a></li>
+            <li><a href="#unidades">Unidades</a></li>
+            <li><a href="#asignaciones">Asignaciones</a></li>
+            <li><a href="#mantenimientos">Mantenimientos</a></li>
+            <li><a href="#inventarios">Inventarios</a></li>
+            <li><a href="#bonificaciones">Bonificaciones</a></li>
+            <li><a href="#reportes">Reportes</a></li>
+        </ul>
+    </aside>
+    <main>
+        <section class="principal" id="principal">
+            <a href="#usuarios">
+                <cards>
+                    <i class="fas fa-user"></i>
+                    <h3>Usuarios</h3>
+                </cards>
+            </a>
+            <a href="#conductores">
+                <cards>
+                    <i class="fas fa-c"></i>
+                    <h3>Conductores</h3>
+                </cards>
+            </a>
+            <a href="#unidades">
+                <cards>
+                    <i class="fas fa-car"></i>
+                    <h3>Vehículos</h3>
+                </cards>
+            </a>
+            <a href="#asignaciones">
+                <cards>
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>Asignaciones</h3>
+                </cards>
+            </a>
+            <a href="#mantenimientos">
+                <cards>
+                    <i class="fas fa-wrench"></i>
+                    <h3>Mantenimientos</h3>
+                </cards>
+            </a>
+            <a href="#inventarios">
+                <cards>
+                    <i class="fas fa-boxes"></i>
+                    <h3>Inventarios</h3>
+                </cards>
+            </a>
+            <a href="#bonificaciones">
+                <cards>
+                    <i class="fas fa-gift"></i>
+                    <h3>Bonificaciones</h3>
+                </cards>
+            </a>
+            <a href="reportes">
+                <cards>
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>Reportes</h3>
+                </cards>
+            </a>
+            <a href="#cerrarSesion">
+                <cards>
+                    <i class="fas fa-sign-out-alt"></i>
+                    <h3>Cerrar sesión</h3>
+                </cards>
+            </a>
+        </section>
+        <section id="usuarios">
+            <!-- Formulario de Registro/Edición -->
+            <form id="formUsuario">
+                <h2>Gestión de Usuarios</h2>
+                <input type="hidden" id="id_usuario">
+
+                <label for="nombre_usuario">Nombre de Usuario:</label>
+                <input type="text" id="nombre_usuario" name="nombre_usuario" required>
+
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" id="correo" name="correo" required>
+
+                <label for="contrasena">Contraseña:</label>
+                <input type="text" id="contrasena" name="contrasena" required>
+
+                <label for="rol">Rol:</label>
+                <select id="rol" name="rol" required>
+                    <option value="">Selecciona un rol</option>
+                    <option value="admin">Administrador</option>
+                    <option value="conductor">Conductor</option>
+                </select>
+
+                <label for="activo">Activo:</label>
+                <select id="activo" name="activo" required>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+
+                <button type="submit">Guardar Usuario</button>
+                <button type="reset">Limpiar</button>
+            </form>
+
+            <!-- Tabla de Usuarios -->
+            <table id="tablaUsuarios">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Llamo al api, consulta todos los usuarios con sus respectivos campos -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="conductores" class="modulo">
+
+            <!-- Formulario para crear/editar -->
+            <form id="formConductor">
+                <h2>Gestión de Conductores</h2>
+                <input type="hidden" id="id_conductor" name="id_conductor" />
+
+                <label for="id_usuario">ID Usuario:</label>
+                <input type="number" id="id_usuario_conductor" name="id_usuario" required />
+
+                <label for="nombre_completo">Nombre Completo:</label>
+                <input type="text" id="nombre_completo" name="nombre_completo" maxlength="100" required />
+
+                <label for="dui">DUI:</label>
+                <input type="text" id="dui" name="dui" maxlength="20" required />
+
+                <label for="licencia">Licencia:</label>
+                <input type="text" id="licencia" name="licencia" maxlength="20" required />
+
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" maxlength="20" required />
+
+                <label for="direccion">Dirección:</label>
+                <textarea id="direccion" name="direccion" rows="3" required></textarea>
+
+                <label for="fecha_ingreso">Fecha de Ingreso:</label>
+                <input type="text" id="fecha_ingreso" name="fecha_ingreso" />
+
+                <label for="estado">Estado:</label>
+                <select id="estado_conductor" name="estado" required>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+
+                <button type="submit">Guardar</button>
+                <button type="reset" id="btnCancelar">Cancelar</button>
+            </form>
+
+            <!-- Tabla para mostrar conductores -->
+            <table id="tablaConductores">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ID Usuario</th>
+                        <th>Nombre Completo</th>
+                        <th>DUI</th>
+                        <th>Licencia</th>
+                        <th>Teléfono</th>
+                        <th>Dirección</th>
+                        <th>Fecha Ingreso</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí se insertarán las filas dinámicamente -->
+                </tbody>
+            </table>
+        </section>
+
+
+        <section id="unidades">
+
+            <!-- Formulario -->
+            <form id="formVehiculo">
+                <h2>Gestión de Unidades</h2>
+                <input type="hidden" id="id_unidad" />
+
+                <label for="placa">Placa:</label>
+                <input type="text" id="placa" required />
+
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca" required />
+
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo" required />
+
+                <label for="anio">Año:</label>
+                <input type="number" id="anio" required />
+
+                <label for="kilometraje">Kilometraje:</label>
+                <input type="number" id="kilometraje" required />
+
+                <label for="fecha_adquisicion">Fecha de Adquisición:</label>
+                <input type="date" id="fecha_adquisicion" required />
+
+                <label for="tipoUnidad">Tipo de Unidad:</label>
+                <select id="tipoUnidad" required>
+                    <option value="">Seleccione</option>
+                    <option value="B">Bus</option>
+                    <option value="C">Camión</option>
+                    <option value="A">Automóvil</option>
+                    <option value="M">Motocicleta</option>
+                </select>
+
+                <!-- Solo visible al editar -->
+                <label for="estado">Estado:</label>
+                <select id="estado_vehiculo">
+                    <option value="Operativo">Operativo</option>
+                    <option value="en_mantenimiento">En mantenimiento</option>
+                    <option value="fuera_servicio">De baja</option>
+                </select>
+
+                <button type="submit">Guardar</button>
+                <button type="reset" id="cancelarEdicion" style="display:none;">Cancelar</button>
+            </form>
+
+            <!-- Tabla -->
+            <table id="tablaVehiculos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Placa</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Año</th>
+                        <th>Kilometraje</th>
+                        <th>Fecha Adquisición</th>
+                        <th>Tipo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <section id="asignaciones">
+
+            <!-- Formulario para asignar unidad -->
+            <form id="formAsignacion">
+                <h2>Asignaciones</h2>
+                <label for="id_conductor">Conductor:</label>
+                <select id="id_conductor_asignacion" required></select>
+
+                <label for="id_unidad">Unidad:</label>
+                <select id="id_unidad_asignacion" required></select>
+
+                <label for="fecha_inicio">Fecha de Inicio:</label>
+                <input type="datetime-local" id="fecha_inicio" required>
+
+                <button type="submit">Asignar Unidad</button>
+            </form>
+
+            <table id="tablaActivas">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Conductor</th>
+                        <th>Unidad</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <table id="tablaHistorial">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Conductor</th>
+                        <th>Unidad</th>
+                        <th>Inicio</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <section id="mantenimientos">
+
+            <form id="formAsignarMantenimiento">
+                <h2>Mantenimientos</h2>
+                <h3>Asignar Mantenimiento</h3>
+                <label for="id_unidad">Unidad:</label>
+                <select id="id_unidad_mantenimiento" name="id_unidad" required></select>
+
+                <label for="id_tipomantenimiento">Tipo de Mantenimiento:</label>
+                <select id="id_tipomantenimiento" name="id_tipomantenimiento" required></select>
+
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" rows="3"></textarea>
+
+                <label for="kilometraje">Kilometraje:</label>
+                <input type="number" id="kilometraje_mantenimiento" name="kilometraje" required>
+
+                <button type="submit" class="btnMant">Asignar</button>
+            </form>
+            <form id="formFinalizarMantenimiento">
+                <label for="unidadFinalizar">Unidad:</label>
+                <select id="id_unidad_finalizar" name="unidadFinalizar" required></select>
+
+                <label for="costo">Costo:</label>
+                <input type="number" id="costo" name="costo" step="0.01" required>
+
+                <button type="submit" class="btnMant">Finalizar</button>
+            </form>
+
+            <table id="tablaHistorial_Mant">
+                <thead>
+                    <tr>
+                        <th>Unidad</th>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th>Kilometraje</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                        <th>Costo</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <section id="inventarios">
+            
+        </section>
+        <section id="bonificaciones">
+            <h2>Bonificaciones</h2>
+
+            <h3>PROXIMAMENTE</h3>
+        </section>
+        <section id="reportes">
+            <h2>Reportes</h2>
+
+            <h3>PROXIMAMENTE</h3>
+        </section>
+        <section id="cerrarSesionBtn">
+            <h2>Cerrar Sesión</h2>
+
+            <h3>PROXIMAMENTE</h3>
+        </section>
+    </main>
+
+    <script src="public/js/administradorView.js"></script>
+    <script src="public/js/vehiculosAdministrador.js"></script>
+    <script src="public/js/conductoresAdministrador.js"></script>
+    <script src="public/js/asignacionesAdministrador.js"></script>
+    <script src="public/js/mantenimientoAdministrador.js"></script>
+    <script src="public/js/usuariosAdministrador.js"></script>
+
+</body>
+</html>

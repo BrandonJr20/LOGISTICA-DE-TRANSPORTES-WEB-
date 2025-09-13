@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar sesión</title>
+  <link rel="stylesheet" href="/views/public/css/login.css">
+</head>
+<body>
+  <div class="login-container">
+    <h2>Iniciar sesión</h2>
+    <form id="loginForm">
+      <input type="text" id="nombre_usuario" name="nombre_usuario" placeholder="Nombre de usuario" required />
+      <input type="text" id="contrasena" name="contrasena" placeholder="Contraseña" required />
+      <button type="submit">Entrar</button>
+      <div class="error" id="errorMensaje"></div>
+    </form>
+  </div>
+
+  <script src="/views/public/js/login.js"></script>
+</body>
+</html>

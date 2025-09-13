@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --Naranja: #b34b0C;
+    --Terracota: #7c3306;
+    --GrisOscuro: #37322e;
+    --GrisMedio: #524944;
+    --GrisClaro: #6c6a66;
+    --gris: #b3b2b0;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 50vh;
+    border-radius: 10px;
+    padding: 2vw;
+    background-image: linear-gradient(260deg,
+            var(--gris) 0%,
+            var(--gris) 20%,
+            var(--Naranja) 20%,
+            var(--Naranja) 21%,
+            var(--GrisClaro) 21%,
+            var(--GrisClaro) 80%,
+            var(--Naranja) 80%,
+            var(--Naranja) 81%,
+            var(--gris) 81%,
+            var(--gris) 100%);
+}
+
+h2 {
+    margin: 1vw 0;
+    color: white;
+    font-weight: 900;
+}
+
+.login-container form{
+    border-radius: 10px;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 1vw;
+    padding-top: 1vw;
+}
+
+input, button{
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 0.5vw 1vw ;
+    margin: 1vw 4vw;
+}
+
+button{
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    background-color: var(--Terracota);
+}
+
+input:hover, input:enabled{
+    animation: bordeNaranja 1s alternate-reverse infinite;
+    cursor: pointer;
+}
+
+button:hover{
+    transform: scale(1.01);
+    cursor: pointer;
+    background-color: var(--Naranja);
+}
+
+@keyframes bordeNaranja {
+    0%{
+        border: 1px solid var(--gris);
+    }
+    50%{
+        border: 2px solid var(--Naranja);
+    }
+    100%{
+        border: 1px solid var(--Terracota);
+    }
+}
