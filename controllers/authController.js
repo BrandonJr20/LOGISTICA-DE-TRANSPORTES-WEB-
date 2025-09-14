@@ -47,7 +47,7 @@ async function loginUsuario(req, res) {
     // 3. Generar token
     const token = jwt.sign(
       {
-        id: usuario.id,                    // ✅ Ahora mapeado correctamente
+        id: usuario.id,
         nombre_usuario: usuario.nombre_usuario,
         correo: usuario.correo,
         rol: usuario.rol
@@ -78,4 +78,31 @@ async function loginUsuario(req, res) {
   }
 }
 
-module.exports = { loginUsuario };
+// Función para cerrar sesión
+async function cerrarSesion(req, res) {
+  try {
+    console.log('Cerrando sesión para usuario:', req.usuario);
+    
+    const { id } = req.usuario; // Del token JWT decodificado
+
+    // Llamar al SP para cerrar sesión (actualiza estado = 0)
+    const resultado = await UsuarioModel.cerrarSesionUsuario(id);
+    
+    console.log('Resultado del SP:', resultado);
+
+    res.json({
+      success: true,
+      mensaje: 'Sesión cerrada correctamente',
+      data: resultado
+    });
+
+  } catch (error) {
+    console.error('Error al cerrar sesión:', error);
+    res.status(500).json({
+      success: false,
+      mensaje: 'Error al cerrar sesión'
+    });
+  }
+}
+
+module.exports = { loginUsuario, cerrarSesion };

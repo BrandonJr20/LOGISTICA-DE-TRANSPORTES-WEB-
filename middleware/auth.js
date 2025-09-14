@@ -13,9 +13,10 @@ const verificarToken = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    req.usuario = decoded;
+    req.usuario = decoded; // Esto es lo que usa cerrarSesion
     next();
   } catch (error) {
+    console.error('Token inválido:', error);
     res.status(400).json({
       success: false,
       mensaje: 'Token inválido'
