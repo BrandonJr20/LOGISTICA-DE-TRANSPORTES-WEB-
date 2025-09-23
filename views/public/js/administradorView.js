@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // ✅ NUEVO: Verificar autenticación al cargar la página
     verificarAutenticacion();
     
     // Elementos del DOM
@@ -15,18 +14,19 @@ document.addEventListener('DOMContentLoaded', function () {
     // Función para verificar autenticación
     function verificarAutenticacion() {
         const token = localStorage.getItem('authToken');
+        console.log('Verificando autenticación, token:', token);
         const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
         
         if (!token || !usuario.rol) {
             alert('Sesión expirada. Por favor, inicia sesión nuevamente.');
-            window.location.href = '/views/index.html';
+            window.location.href = '../';
             return false;
         }
         
         // Verificar que sea admin (opcional, según tu lógica)
         if (usuario.rol !== 'admin') {
             alert('No tienes permisos para acceder a esta página.');
-            window.location.href = '/views/index.html';
+            window.location.href = '../';
             return false;
         }
         
@@ -114,18 +114,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Eventos: clic en los enlaces del aside
+    // // Eventos: clic en los enlaces del aside
     navLinks.forEach(link => {
         link.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').replace('#', '');
-            
-            // Manejo especial para cerrar sesión
-            if (targetId === 'cerrarSesion') {
-                cerrarSesion();
-                return;
-            }
-            
+     
+            // // Manejo especial para cerrar sesión
+            // if (targetId === 'cerrarSesion') {
+            //     cerrarSesion();
+            //     return;
+            // }
+     
             showSection(targetId);
         });
     });
@@ -143,15 +143,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Cerrar sesión mejorado
-    const logoutCard = document.querySelector('a[href="#cerrarSesion"]');
-    if (logoutCard) {
-        logoutCard.addEventListener('click', function (e) {
-            e.preventDefault();
-            cerrarSesion();
-        });
-    }
-
     // Función completa para cerrar sesión
     async function cerrarSesion() {
         try {
@@ -162,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!token) {
                 console.log('No hay token, redirigiendo al login');
                 limpiarDatosLocales();
-                window.location.href = '/views/index.html';
+                window.location.href = '../';
                 return;
             }
 
@@ -172,9 +163,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            console.log('Enviando petición de logout al servidor...');
+            console.log('Enviando petición de logout al servidor...'); //Aca esta el error
 
-            const response = await fetch('/login/logout', {
+            const response = await fetch('http://localhost:3000/login/logout', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -189,13 +180,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log('Logout exitoso en servidor');
                 limpiarDatosLocales();
                 alert('Sesión cerrada correctamente');
-                window.location.href = './index.html';
+                window.location.href = '../';
             } else {
                 console.error('Error en logout del servidor:', data.mensaje);
                 // Aún así, limpiar datos locales y redireccionar
                 limpiarDatosLocales();
                 alert('Sesión cerrada localmente');
-                window.location.href = './index.html';
+                window.location.href = '../';
             }
             
         } catch (error) {
@@ -204,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // En caso de error, forzar logout local
             limpiarDatosLocales();
             alert('Error de conexión. Cerrando sesión localmente.');
-            window.location.href = './index.html';
+            window.location.href = '../';
         }
     }
 
@@ -232,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log('⚠️ Token expirado, cerrando sesión automáticamente');
                     limpiarDatosLocales();
                     alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
-                    window.location.href = '/views/index.html';
+                    window.location.href = '../';
                 }
             })
             .catch(error => {
@@ -288,35 +279,3 @@ document.addEventListener('DOMContentLoaded', function () {
 
     console.log('Sistema de administración inicializado correctamente');
 });
-
-// // Función global para cerrar sesión (accesible desde HTML)
-// window.cerrarSesion = async function() {
-//     try {
-//         const token = localStorage.getItem('authToken');
-        
-//         if (!token) {
-//             window.location.href = '/views/index.html';
-//             return;
-//         }
-
-//         const confirmar = confirm('¿Estás seguro de que deseas cerrar sesión?');
-//         if (!confirmar) return;
-
-//         await fetch('/login/logout', {
-//             method: 'POST',
-//             headers: {
-//                 'Authorization': `Bearer ${token}`,
-//                 'Content-Type': 'application/json'
-//             }
-//         });
-
-//         localStorage.clear();
-//         alert('Sesión cerrada correctamente');
-//         window.location.href = 'index.html';
-        
-//     } catch (error) {
-//         console.error('Error:', error);
-//         localStorage.clear();
-//         window.location.href = './index.html';
-//     }
-// };

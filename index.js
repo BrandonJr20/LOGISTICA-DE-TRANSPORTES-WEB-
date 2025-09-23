@@ -20,7 +20,7 @@ const authRoutes = require('./routes/authRoutes');
 app.use(express.json());
 app.use(cors());
 
-// AGREGAR: Servir archivos estáticos
+// Servir archivos estáticos
 app.use('/views', express.static(path.join(__dirname, 'views')));
 app.use('/public', express.static(path.join(__dirname, 'views/public')));
 

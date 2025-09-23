@@ -13,7 +13,7 @@ const verificarToken = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    req.usuario = decoded; // Esto es lo que usa cerrarSesion
+    req.usuario = decoded;
     next();
   } catch (error) {
     console.error('Token inválido:', error);
