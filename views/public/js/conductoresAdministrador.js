@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             telefono: document.getElementById('telefono').value,
             direccion: document.getElementById('direccion').value,
             fecha_ingreso: document.getElementById('fecha_ingreso').value, // formato YYYY-MM-DD
-            estado: parseInt(document.getElementById('estado_conductor').value) // 1 o 0
+            activo: parseInt(document.getElementById('activo_conductor').value) // 1 o 0
         };
 
         try {
@@ -60,15 +60,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tr = document.createElement('tr');
 
                 tr.innerHTML = `
-                    <td>${conductor.id_conductor}</td>
-                    <td>${conductor.id_usuario}</td>
+                    <!--<td>${conductor.id_conductor}</td>-->
+                    <!--<td>${conductor.id_usuario}</td>-->
                     <td>${conductor.nombre_completo}</td>
                     <td>${conductor.dui}</td>
                     <td>${conductor.licencia}</td>
                     <td>${conductor.telefono}</td>
                     <td>${conductor.direccion}</td>
                     <td>${conductor.fecha_ingreso}</td>
-                    <td>${conductor.estado_conductor  ? 'Activo' : 'Inactivo'}</td>
+                    <td>${conductor.activo_conductor  ? 'Habilitado' : 'Inhabilitado'}</td>
                     <td>
                         <button class="editar" data-id="${conductor.id_conductor}">Editar</button>
                         <button class="eliminar" data-id="${conductor.id_conductor}">Eliminar</button>
@@ -94,14 +94,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const conductor = await res.json();
 
                     document.getElementById('id_conductor').value = conductor.id_conductor;
-                    document.getElementById('id_usuario').value = conductor.id_usuario;
+                    document.getElementById('id_usuario_conductor').value = conductor.id_usuario;
                     document.getElementById('nombre_completo').value = conductor.nombre_completo;
                     document.getElementById('dui').value = conductor.dui;
                     document.getElementById('licencia').value = conductor.licencia;
                     document.getElementById('telefono').value = conductor.telefono;
                     document.getElementById('direccion').value = conductor.direccion;
                     document.getElementById('fecha_ingreso').value = conductor.fecha_ingreso;
-                    document.getElementById('estado').value = conductor.estado ? 1 : 0;
+                    document.getElementById('activo_conductor').value = conductor.activo_conductor ? 1 : 0;
                 } catch (err) {
                     console.error('Error al cargar conductor para editar:', err);
                 }

@@ -35,7 +35,7 @@ const ConductorModel = {
         return result.recordset;
     },
 
-    async actualizar( { id, id_usuario, nombre_completo, dui, licencia, telefono, direccion, fecha_ingreso, estado } ) {
+    async actualizar( { id, id_usuario, nombre_completo, dui, licencia, telefono, direccion, fecha_ingreso, activo } ) {
         const request = new db.sql.Request();
         request.input('id_conductor', db.sql.Int, id)
         request.input('id_usuario', db.sql.Int, id_usuario)
@@ -45,7 +45,7 @@ const ConductorModel = {
         request.input('telefono', db.sql.VarChar(20), telefono);
         request.input('direccion', db.sql.Text, direccion);
         request.input('fecha_ingreso', db.sql.Date, fecha_ingreso)
-        request.input('estado', db.sql.Bit, estado);
+        request.input('activo', db.sql.Bit, activo);
         const result = await request.execute('sp_ActualizarConductor');
         return result.rowsAffected[0];
     },

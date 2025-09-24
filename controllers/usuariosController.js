@@ -33,8 +33,8 @@ class UsuariosController {
 
     async consultarActivos(req, res) {
         try {
-            const estado = req.params.estado === '1' ? 1 : 0;
-            const data = await UsuarioModel.obtenerActivos(estado);
+            const activo = req.params.activo === '1' ? 1 : 0;
+            const data = await UsuarioModel.obtenerActivos(activo);
 
             if (!data) {
                 return res.status(404).json({ msg: 'No se encontró el registro.' });
@@ -49,7 +49,7 @@ class UsuariosController {
 
     async ingresar(req, res) {
         try {
-            const { nombre_usuario, correo, contrasena, rol, estado } = req.body;
+            const { nombre_usuario, correo, contrasena, rol, activo } = req.body;
 
             // Validaciones básicas
             if (
@@ -57,7 +57,7 @@ class UsuariosController {
                 typeof correo !== 'string' ||
                 typeof contrasena !== 'string' ||
                 typeof rol !== 'string' ||
-                typeof estado !== 'number'
+                typeof activo !== 'number'
             ) {
                 return res.status(400).json({ error: 'Datos inválidos. Verifica los tipos.' });
             }
@@ -70,7 +70,7 @@ class UsuariosController {
                     correo, 
                     contrasena: hash, 
                     rol, 
-                    estado 
+                    activo 
                 });
             res.status(201).json({ id_conductor: insertado.id_usuario || insertado.id });
         } catch (err) {
@@ -115,7 +115,7 @@ class UsuariosController {
         }
     }
 
-    async eliminar(req, res) {
+    async eliminar(req, res) { //Deshabilitar usuario no eliminar - Se elimina manualmente en la BD
         try {
             const { id } = req.params;
 

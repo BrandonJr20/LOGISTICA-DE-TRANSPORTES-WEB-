@@ -71,7 +71,7 @@ class ConductorController {
     async actualizar(req, res) {
         try {
             const { id } = req.params;
-            const { id_usuario, nombre_completo, dui, licencia, telefono, direccion, fecha_ingreso, estado } = req.body;
+            const { id_usuario, nombre_completo, dui, licencia, telefono, direccion, fecha_ingreso, activo } = req.body;
 
             console.log(req.body);
             if (!id || isNaN(id)) {
@@ -87,12 +87,12 @@ class ConductorController {
                 typeof telefono !== 'string' ||
                 typeof direccion !== 'string' ||
                 !(fecha_ingreso === null || typeof fecha_ingreso === 'string') ||  // Validación corregida
-                (typeof estado !== 'number' && typeof estado !== 'boolean')
+                (typeof activo !== 'number' && typeof activo !== 'boolean')
             ) {
                 return res.status(400).json({ error: 'Datos inválidos. Verifica los tipos.' });
             }
 
-            const estadoNum = typeof estado === 'boolean' ? (estado ? 1 : 0) : estado;
+            const activoNum = typeof activo === 'boolean' ? (activo ? 1 : 0) : activo;
 
             const filasAfectadas = await ConductorModel.actualizar({
                 id: parseInt(id),
@@ -103,7 +103,7 @@ class ConductorController {
                 telefono,
                 direccion,
                 fecha_ingreso,
-                estado: estadoNum
+                activo: activoNum
             });
 
             if (filasAfectadas === 0) {
