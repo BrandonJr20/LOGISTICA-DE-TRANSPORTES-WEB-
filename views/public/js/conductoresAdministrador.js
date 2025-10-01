@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     obtenerConductores();
 
     // Enviar formulario
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+    form.addEventListener('submit', async (a) => {
+        a.preventDefault();
 
         const id = document.getElementById('id_conductor').value;
         const datos = {
@@ -67,14 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${conductor.licencia}</td>
                     <td>${conductor.telefono}</td>
                     <td>${conductor.direccion}</td>
-                    <td>${conductor.fecha_ingreso}</td>
+                    <td>${(new Date(conductor.fecha_ingreso).getDate() + 1).toString().padStart(2, '0')}-${(new Date(conductor.fecha_ingreso).getMonth() + 1).toString().padStart(2, '0')}-${new Date(conductor.fecha_ingreso).getFullYear()}</td>
                     <td>${conductor.activo_conductor  ? 'Habilitado' : 'Inhabilitado'}</td>
                     <td>
-                        <button class="editar" data-id="${conductor.id_conductor}">Editar</button>
-                        <button class="eliminar" data-id="${conductor.id_conductor}">Eliminar</button>
+                        <button class="editar-conductor" data-id="${conductor.id_conductor}">Editar</button>
+                        <button class="eliminar-conductor" data-id="${conductor.id_conductor}">Eliminar</button>
                     </td>
                 `;
-
                 tablaBody.appendChild(tr);
             });
 
@@ -86,9 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Agregar eventos a botones editar y eliminar
     function agregarEventosAcciones() {
-        document.querySelectorAll('.editar').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                const id = e.target.dataset.id;
+        document.querySelectorAll('.editar-conductor').forEach(btn => {
+            btn.addEventListener('click', async (a) => {
+                const id = a.target.dataset.id;
                 try {
                     const res = await fetch(`${apiUrl}/${id}`);
                     const conductor = await res.json();
@@ -108,9 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        document.querySelectorAll('.eliminar').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                const id = e.target.dataset.id;
+        document.querySelectorAll('.eliminar-conductor').forEach(btn => {
+            btn.addEventListener('click', async (a) => {
+                const id = a.target.dataset.id;
                 if (confirm('¿Estás seguro de eliminar este conductor?')) {
                     try {
                         await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });

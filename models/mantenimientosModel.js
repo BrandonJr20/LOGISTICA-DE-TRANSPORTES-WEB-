@@ -64,6 +64,16 @@ const MantenimientoModel = {
         }
     },
 
+    async obtenerMantenimientosActivos() {
+        try {
+            const request = new db.sql.Request();
+            const result = await request.execute('obtenerMantenimientosActivos');
+            return result.recordset;
+        } catch (error) {
+            throw new Error('Error al obtener mantenimientos activos: ' + error.message);
+        }
+    },
+
     async obtenerTiposMantenimiento() {
         try {
             const request = new db.sql.Request();

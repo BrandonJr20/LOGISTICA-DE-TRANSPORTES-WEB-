@@ -27,11 +27,15 @@
             <li><a href="#asignaciones">Asignaciones</a></li>
             <li><a href="#mantenimientos">Mantenimientos</a></li>
             <li><a href="#inventarios">Inventarios</a></li>
+            <li><a href="#movimientos-inventario">Movimientos</a></li>
+            <li><a href="#insumos-mantenimiento">Insumos por mantenimiento</a></li>
+            <li><a href="#alertas-stock">Alertas por Stock</a></li>
             <li><a href="#bonificaciones">Bonificaciones</a></li>
             <li><a href="#reportes">Reportes</a></li>
         </ul>
     </aside>
     <main>
+        <!-- SECCION CON CARTAS DE ENLACE PARA PESTANA PRINCIPAL -->
         <section class="principal" id="principal">
             <a href="#usuarios">
                 <cards>
@@ -69,6 +73,28 @@
                     <h3>Inventarios</h3>
                 </cards>
             </a>
+
+            <a href="#movimientos-inventario">
+                <cards>
+                    <i class="fas fa-people-arrows"></i>
+                    <h3>Movimientos</h3>
+                </cards>
+            </a>
+
+            <a href="#insumos-mantenimiento">
+                <cards>
+                    <i class="fas fa-tools"></i>
+                    <h3>Insumos por mantenimiento</h3>
+                </cards>
+            </a>
+
+            <a href="#alertas-stock">
+                <cards>
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Alertas por Stock</h3>
+                </cards>
+            </a>
+
             <a href="#bonificaciones">
                 <cards>
                     <i class="fas fa-gift"></i>
@@ -88,6 +114,8 @@
                 </cards>
             </a>
         </section>
+
+        <!-- SECCION DE USUARIOS -->
         <section id="usuarios">
             <!-- Formulario de Registro/Edición -->
             <form id="formUsuario">
@@ -138,12 +166,13 @@
             </table>
         </section>
 
+        <!-- SECCION DE CONDUCTORES -->
         <section id="conductores" class="modulo">
 
             <!-- Formulario para crear/editar -->
             <form id="formConductor">
                 <h2>Gestión de Conductores</h2>
-                <input type="hidden" id="id_conductor" name="id_conductor" /> 
+                <input type="hidden" id="id_conductor" name="id_conductor" />
                 <label for="id_usuario_conductor">ID Usuario:</label>
                 <input type="text" id="id_usuario_conductor" name="id_usuario" required />
 
@@ -172,7 +201,7 @@
                 </select>
 
                 <button type="submit">Guardar</button>
-                <button type="reset" id="btnCancelar">Cancelar</button>
+                <button type="reset" class="btnCancelar">Cancelar</button>
             </form>
 
             <!-- Tabla para mostrar conductores -->
@@ -197,10 +226,10 @@
             </table>
         </section>
 
-
+        <!-- SECCION DE UNIDADES -->
         <section id="unidades">
 
-            <!-- Formulario -->
+            <!-- Formulario para editar/crear unidades-->
             <form id="formVehiculo">
                 <h2>Gestión de Unidades</h2>
                 <input type="hidden" id="id_unidad" />
@@ -241,7 +270,7 @@
                 </select>
 
                 <button type="submit">Guardar</button>
-                <button type="reset" id="cancelarEdicion" style="display:none;">Cancelar</button>
+                <button type="reset" class="btnCancelar">Cancelar</button>
             </form>
 
             <!-- Tabla -->
@@ -264,6 +293,7 @@
             </table>
         </section>
 
+        <!-- SECCION DE ASIGNACIONES  -->
         <section id="asignaciones">
 
             <!-- Formulario para asignar unidad -->
@@ -279,6 +309,7 @@
                 <input type="datetime-local" id="fecha_inicio" required>
 
                 <button type="submit">Asignar Unidad</button>
+                <button type="reset" class="btnCancelar">Cancelar</button>
             </form>
 
             <table id="tablaActivas">
@@ -308,35 +339,53 @@
             </table>
         </section>
 
+        <!-- SESCCION DE MANTENIMIENTOS -->
         <section id="mantenimientos">
+            <h2>Gestión de Mantenimientos</h2>
 
-            <form id="formAsignarMantenimiento">
-                <h2>Mantenimientos</h2>
-                <h3>Asignar Mantenimiento</h3>
-                <label for="id_unidad">Unidad:</label>
-                <select id="id_unidad_mantenimiento" name="id_unidad" required></select>
+            <div class="formularios-container">
+                <!-- Formulario Asignar Mantenimiento -->
+                <form id="formAsignarMantenimiento">
+                    <h3>Asignar Mantenimiento</h3>
 
-                <label for="id_tipomantenimiento">Tipo de Mantenimiento:</label>
-                <select id="id_tipomantenimiento" name="id_tipomantenimiento" required></select>
+                    <label for="id_unidad_mantenimiento">Unidad:</label>
+                    <select id="id_unidad_mantenimiento" name="id_unidad" required>
+                        <option value="">Seleccione</option>
+                    </select>
 
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" rows="3"></textarea>
+                    <label for="id_tipomantenimiento">Tipo de Mantenimiento:</label>
+                    <select id="id_tipomantenimiento" name="id_tipomantenimiento" required>
+                        <option value="">Seleccione</option>
+                    </select>
 
-                <label for="kilometraje">Kilometraje:</label>
-                <input type="number" id="kilometraje_mantenimiento" name="kilometraje" required>
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" rows="3"></textarea>
 
-                <button type="submit" class="btnMant">Asignar</button>
-            </form>
-            <form id="formFinalizarMantenimiento">
-                <label for="unidadFinalizar">Unidad:</label>
-                <select id="id_unidad_finalizar" name="unidadFinalizar" required></select>
+                    <label for="kilometraje_mantenimiento">Kilometraje:</label>
+                    <input type="number" id="kilometraje_mantenimiento" name="kilometraje" required>
 
-                <label for="costo">Costo:</label>
-                <input type="number" id="costo" name="costo" step="0.01" required>
+                    <button type="submit" class="btnMant">Asignar</button>
+                    <button type="reset" class="btnCancelar">Cancelar</button>
+                </form>
 
-                <button type="submit" class="btnMant">Finalizar</button>
-            </form>
+                <!-- Formulario Finalizar Mantenimiento -->
+                <form id="formFinalizarMantenimiento">
+                    <h3>Finalizar Mantenimiento</h3>
 
+                    <label for="id_unidad_finalizar">Unidad:</label>
+                    <select id="id_unidad_finalizar" name="unidadFinalizar" required>
+                        <option value="">Seleccione</option>
+                    </select>
+
+                    <label for="costo">Costo:</label>
+                    <input type="number" id="costo" name="costo" step="0.01" required>
+
+                    <button type="submit" class="btnMant">Finalizar</button>
+                </form>
+            </div>
+
+            <!-- Tabla Historial de Mantenimientos -->
+            <h3>Historial de Mantenimientos</h3>
             <table id="tablaHistorial_Mant">
                 <thead>
                     <tr>
@@ -347,15 +396,181 @@
                         <th>Inicio</th>
                         <th>Fin</th>
                         <th>Costo</th>
+                        <th>Insumos</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
         </section>
 
+        <!-- SECCIÓN DE INVENTARIOS -->
         <section id="inventarios">
+            <h2>Gestión de Inventarios</h2>
 
+            <!-- Formulario Agregar Productos -->
+            <form id="formInventarios">
+                <h3>Agregar Producto/Insumo</h3>
+
+                <label for="nombre_producto">Nombre:</label>
+                <input type="text" id="nombre_producto" name="nombre_producto" required>
+
+                <label for="tipo_producto">Tipo:</label>
+                <select name="tipo_producto" id="tipo_producto" required>
+                    <option value="">Seleccione</option>
+                </select>
+
+                <label for="descripcion_producto">Descripción:</label>
+                <textarea id="descripcion_producto" name="descripcion_producto" rows="3"></textarea>
+
+                <label for="stock_actual">Stock Actual:</label>
+                <input type="number" id="stock_actual" name="stock_actual" required min="0">
+
+                <label for="stock_minimo">Stock Mínimo:</label>
+                <input type="number" id="stock_minimo" name="stock_minimo" required min="0">
+
+                <label for="proveedor">Proveedor:</label>
+                <input type="text" id="proveedor" name="proveedor" required>
+
+                <button type="submit">Agregar Producto</button>
+                <button type="reset" class="btnCancelar">Cancelar</button>
+            </form>
+
+            <!-- Tabla de Inventarios -->
+            <h3>Lista de Productos</h3>
+            <table id="tablaInventarios">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th>Stock Actual</th>
+                        <th>Stock Mínimo</th>
+                        <th>Proveedor</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </section>
+
+        <!-- SECCIÓN DE MOVIMIENTOS DE INVENTARIO -->
+        <section id="movimientos-inventario">
+            <h2>Movimientos de Inventario</h2>
+
+            <!-- Formulario Registrar Movimiento -->
+            <form id="formMovimientoInventario">
+                <h3>Registrar Movimiento</h3>
+
+                <label for="id_insumo_movimiento">Producto/Insumo:</label>
+                <select id="id_insumo_movimiento" name="id_insumo" required>
+                    <option value="">Seleccione</option>
+                </select>
+
+                <label for="tipo_movimiento">Tipo de Movimiento:</label>
+                <select id="tipo_movimiento" name="tipo_movimiento" required>
+                    <option value="">Seleccione</option>
+                    <option value="ENTRADA">Entrada</option>
+                    <option value="SALIDA">Salida</option>
+                </select>
+
+                <label for="cantidad_movimiento">Cantidad:</label>
+                <input type="number" id="cantidad_movimiento" name="cantidad" required min="1">
+
+                <label for="descripcion_movimiento">Descripción:</label>
+                <textarea id="descripcion_movimiento" name="descripcion" rows="3"></textarea>
+
+                <label for="responsable_movimiento">Responsable:</label>
+                <input type="text" id="responsable_movimiento" name="responsable" required>
+
+                <button type="submit">Registrar Movimiento</button>
+                <button type="reset" class="btnCancelar">Cancelar</button>
+            </form>
+
+            <!-- Tabla Historial de Movimientos -->
+            <h3>Historial de Movimientos</h3>
+            <table id="tablaMovimientos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Producto</th>
+                        <th>Tipo</th>
+                        <th>Cantidad</th>
+                        <th>Fecha</th>
+                        <th>Descripción</th>
+                        <th>Responsable</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <!-- SECCIÓN DE ASIGNACIÓN DE INSUMOS A MANTENIMIENTOS -->
+        <section id="insumos-mantenimiento">
+            <h2>Asignar Insumos a Mantenimientos</h2>
+
+            <!-- Formulario Asignar Insumos -->
+            <form id="formAsignarInsumos">
+                <h3>Asignar Insumos al Mantenimiento</h3>
+
+                <label for="id_mantenimiento_insumo">Mantenimiento Activo:</label>
+                <select id="id_mantenimiento_insumo" name="id_mantenimiento" required>
+                    <option value="">Seleccione</option>
+                </select>
+
+                <label for="id_insumo_asignar">Insumo:</label>
+                <select id="id_insumo_asignar" name="id_insumo" required>
+                    <option value="">Seleccione</option>
+                </select>
+
+                <label for="cantidad_usada">Cantidad Usada:</label>
+                <input type="number" id="cantidad_usada" name="cantidad_usada" required min="1">
+
+                <button type="submit">Asignar Insumo</button>
+                <button type="reset" class="btnCancelar">Cancelar</button>
+            </form>
+
+            <!-- Tabla de Insumos por Mantenimiento -->
+            <h3>Insumos Utilizados por Mantenimiento</h3>
+            <div class="filtro-container">
+                <label for="filtro_mantenimiento">Filtrar por Mantenimiento:</label>
+                <select id="filtro_mantenimiento">
+                    <option value="">Todos</option>
+                </select>
+            </div>
+
+            <table id="tablaInsumosMantenimiento">
+                <thead>
+                    <tr>
+                        <th>ID Mantenimiento</th>
+                        <th>Unidad</th>
+                        <th>Insumo</th>
+                        <th>Cantidad Usada</th>
+                        <th>Fecha Mantenimiento</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <!-- SECCIÓN DE ALERTAS DE STOCK -->
+        <section id="alertas-stock">
+            <h2>Alertas de Stock Bajo</h2>
+            <table id="tablaAlertasStock">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Stock Actual</th>
+                        <th>Stock Mínimo</th>
+                        <th>Diferencia</th>
+                        <th>Proveedor</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
         <section id="bonificaciones">
             <h2>Bonificaciones</h2>
 
@@ -367,9 +582,6 @@
             <h3>PROXIMAMENTE</h3>
         </section>
         <section id="cerrarSesionBtn">
-            <h2>Cerrar Sesión</h2>
-
-            <h3>PROXIMAMENTE</h3>
         </section>
     </main>
 

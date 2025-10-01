@@ -89,6 +89,15 @@ class MantenimientoController {
         }
     }
 
+    async getMantenimientosActivos(req, res){
+        try {
+            const activos = await MantenimientoModel.obtenerMantenimientosActivos();
+            res.status(200).json(activos);
+        } catch (error) {
+            res.status(500).json({ mensaje: 'Error al obtener mantenimientos activos', error: error.message });
+        }
+    }
+    
    async getTiposMantenimiento(req, res){
     try {
         const tipos = await MantenimientoModel.obtenerTiposMantenimiento();
