@@ -91,7 +91,7 @@ async function obtenerHistorial() {
 
     const tbody = document.querySelector('#tablaHistorial_Mant tbody');
     tbody.innerHTML = '';
-
+    console.log(data);
     data.forEach(row => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
@@ -102,6 +102,8 @@ async function obtenerHistorial() {
         <td>${row.fecha_ini_mantenimiento ? new Date(row.fecha_ini_mantenimiento).toLocaleString() : '—'}</td>
         <td>${row.fecha_fin_mantenimiento ? new Date(row.fecha_fin_mantenimiento).toLocaleString() : '—'}</td>
         <td>${row.costo !== null ? `Q${parseFloat(row.costo).toFixed(2)}` : '—'}</td>
+        <td>${row.Id_insumos || '—'}</td>
+        <td>${row.Descripcion_insumos || '—'}</td>
       `;
       tbody.appendChild(tr);
     });
