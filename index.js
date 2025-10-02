@@ -14,6 +14,7 @@ const vehiculosRoutes = require('./routes/vehiculosRoutes');
 const asignacionesRoutes = require('./routes/asignacionesRoutes');
 const mantenimientosRoutes = require('./routes/mantenimientosRoutes');
 const ejemploRoutes = require('./routes/ejemploRoutes');
+const inventarioRoutes = require('./routes/inventarioRoutes')
 const authRoutes = require('./routes/authRoutes');
 
 // Middleware
@@ -34,6 +35,7 @@ app.use('/vehiculos', vehiculosRoutes);
 app.use('/asignaciones', asignacionesRoutes);
 app.use('/mantenimientos', mantenimientosRoutes);
 app.use('/ejemplos', ejemploRoutes);
+app.use('/inventario', inventarioRoutes);
 app.use('/login', authRoutes);
 
 const PORT = process.env.PORT || 3000;
