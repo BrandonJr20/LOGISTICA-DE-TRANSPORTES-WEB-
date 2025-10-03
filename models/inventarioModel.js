@@ -56,4 +56,4 @@ const InventarioModel = {
     }
 }   
 
-module.exports = InventarioModel;
+module.exports = InventarioModel
