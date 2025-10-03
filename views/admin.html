@@ -145,7 +145,8 @@
                 </select>
 
                 <button type="submit">Guardar Usuario</button>
-                <button type="reset">Limpiar</button>
+                <button type="reset" class="btnCancelar">Cancelar</button>
+
             </form>
 
             <!-- Tabla de Usuarios -->
@@ -413,8 +414,8 @@
             <form id="formInventarios">
                 <h3>Agregar Producto/Insumo</h3>
 
-                <label for="nombre_producto">Nombre:</label>
-                <input type="text" id="nombre_producto" name="nombre_producto" required>
+                <label for="nombre_insumo">Nombre:</label>
+                <input type="text" id="nombre_insumo" name="nombre_insumo" required>
 
                 <label for="tipo_producto">Tipo:</label>
                 <select name="tipo_producto" id="tipo_producto" required>
@@ -450,7 +451,6 @@
                         <th>Stock Mínimo</th>
                         <th>Proveedor</th>
                         <th>Estado</th>
-                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -567,6 +567,7 @@
                         <th>Stock Mínimo</th>
                         <th>Diferencia</th>
                         <th>Proveedor</th>
+                        <th>Tipo Producto</th>
                     </tr>
                 </thead>
                 <tbody></tbody>

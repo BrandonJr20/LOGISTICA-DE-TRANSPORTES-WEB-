@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     verificarAutenticacion();
-    
+
     // Elementos del DOM
     const sidebar = document.getElementById('sidebar');
     const menuToggle = document.getElementById('menuToggle');
@@ -16,39 +16,39 @@ document.addEventListener('DOMContentLoaded', function () {
         const token = localStorage.getItem('authToken');
         console.log('Verificando autenticación, token:', token);
         const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
-        
+
         if (!token || !usuario.rol) {
             alert('Sesión expirada. Por favor, inicia sesión nuevamente.');
             window.location.href = '../';
             return false;
         }
-        
+
         // Verificar que sea admin (opcional, según tu lógica)
         if (usuario.rol !== 'admin') {
             alert('No tienes permisos para acceder a esta página.');
             window.location.href = '../';
             return false;
         }
-        
+
         return true;
     }
 
     // Mostrar datos del usuario en el sidebar
     function mostrarDatosUsuario() {
         const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
-        
+
         // Buscar elementos donde mostrar la info del usuario
         const perfilNombre = document.querySelector('.perfil h3');
         const perfilEmail = document.querySelector('.perfil p');
-        
+
         if (perfilNombre) {
             perfilNombre.textContent = usuario.nombre_usuario || 'Usuario';
         }
-        
+
         if (perfilEmail) {
             perfilEmail.textContent = usuario.correo || '';
         }
-        
+
         console.log('Datos de usuario mostrados:', usuario);
     }
 
@@ -103,13 +103,13 @@ document.addEventListener('DOMContentLoaded', function () {
         card.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').replace('#', '');
-            
+
             // Manejo especial para cerrar sesión
             if (targetId === 'cerrarSesion') {
                 cerrarSesion();
                 return;
             }
-            
+
             showSection(targetId);
         });
     });
@@ -119,13 +119,13 @@ document.addEventListener('DOMContentLoaded', function () {
         link.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').replace('#', '');
-     
+
             // // Manejo especial para cerrar sesión
             // if (targetId === 'cerrarSesion') {
             //     cerrarSesion();
             //     return;
             // }
-     
+
             showSection(targetId);
         });
     });
@@ -147,9 +147,9 @@ document.addEventListener('DOMContentLoaded', function () {
     async function cerrarSesion() {
         try {
             console.log('Iniciando proceso de cierre de sesión...');
-            
+
             const token = localStorage.getItem('authToken');
-            
+
             if (!token) {
                 console.log('No hay token, redirigiendo al login');
                 limpiarDatosLocales();
@@ -188,10 +188,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert('Sesión cerrada localmente');
                 window.location.href = '../';
             }
-            
+
         } catch (error) {
             console.error('Error en cerrarSesion:', error);
-            
+
             // En caso de error, forzar logout local
             limpiarDatosLocales();
             alert('Error de conexión. Cerrando sesión localmente.');
@@ -218,17 +218,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => {
-                if (!response.ok) {
-                    console.log('⚠️ Token expirado, cerrando sesión automáticamente');
-                    limpiarDatosLocales();
-                    alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
-                    window.location.href = '../';
-                }
-            })
-            .catch(error => {
-                console.log('⚠️ Error verificando token:', error);
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        console.log('⚠️ Token expirado, cerrando sesión automáticamente');
+                        limpiarDatosLocales();
+                        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+                        window.location.href = '../';
+                    }
+                })
+                .catch(error => {
+                    console.log('⚠️ Error verificando token:', error);
+                });
         }
     }, 5 * 60 * 1000); // 5 minutos
 
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Verificar inactividad cada minuto
     setInterval(() => {
         tiempoInactividad += 60 * 1000; // 1 minuto
-        
+
         if (tiempoInactividad >= TIEMPO_MAX_INACTIVIDAD) {
             alert('Tu sesión ha expirado por inactividad.');
             cerrarSesion();
@@ -278,4 +278,39 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     console.log('Sistema de administración inicializado correctamente');
+
+    //funcion para limpiar todos los formularios al cancelar
+    document.addEventListener('click', (e) => {
+        // si se clickeó un reset / cancelar
+        if (
+            e.target.matches('button[type="reset"]') ||
+            e.target.matches('#btnCancelar') ||
+            e.target.closest('.btnCancelar')
+        ) {
+            e.preventDefault(); // evita comportamiento por defecto para controlar todo
+
+            document.querySelectorAll('form').forEach(form => {
+                form.reset();
+                form.querySelectorAll('input[type="hidden"]').forEach(h => h.value = '');
+                // campos concretos que usás en tu HTML
+                ['id_conductor', 'id_unidad', 'id_usuario_conductor', 'id_usuario', 'id', 'id_asignacion', 'id_mantenimiento', 'id_insumo', 'id_movimiento'].forEach(key => {
+                    const byId = form.querySelector(`#${key}`);
+                    const byName = form.querySelector(`[name="${key}"]`);
+                    if (byId) byId.value = '';
+                    if (byName) byName.value = '';
+                });
+                form.querySelectorAll('[data-edit-id]').forEach(el => el.removeAttribute('data-edit-id'));
+            });
+
+            document.querySelectorAll('form').forEach(form => {
+                const submit = form.querySelector('button[type="submit"], input[type="submit"]');
+                if (submit) {
+                    submit.textContent = 'Guardar';
+                    submit.dataset.mode = 'create';
+                }
+            });
+
+            if (window.currentEditId) window.currentEditId = null;
+        }
+    });
 });

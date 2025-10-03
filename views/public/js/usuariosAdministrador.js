@@ -92,6 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('contrasena').value = usuario.contrasena;
                     document.getElementById('rol').value = usuario.rol;
                     document.getElementById('activo').value = usuario.activo ? 1 : 0;
+
+                    console.log(usuario)
                 } catch (err) {
                     console.error('Error al cargar usuario para editar:', err);
                 }
