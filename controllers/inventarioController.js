@@ -47,11 +47,11 @@ class InventarioController {
         try {
             const {nombre_insumo, tipo, descripcion, stock_actual, stock_minimo, proveedor} = req.body
             const resultado = await InventarioModel.agregarProducto({nombre_insumo, tipo, descripcion, stock_actual, stock_minimo, proveedor})
-            if(resultado > 0){
-                res.status(201).json({msg: 'Producto agregado correctamente'})
-            } else {
-                res.status(400).json({msg: 'No se pudo agregar el producto'})
-            }
+            res.status(201).json({
+                success:true,
+                msg: 'Producto agregado correctamente',
+                data:resultado
+            })
         } catch (error) {
             console.error(error)
             res.status(500).send('Error al agregar el producto')
@@ -63,9 +63,15 @@ class InventarioController {
             const {id_insumo, nombre, tipo, descripcion, stock_actual, stock_minimo, proveedor, estado} = req.body
             const resultado = await InventarioModel.actualizarProducto({id_insumo, nombre, tipo, descripcion, stock_actual, stock_minimo, proveedor, estado})
             if(resultado > 0){
-                res.status(200).json({msg: 'Producto actualizado correctamente'})
+                res.status(201).json({
+                    success: true,
+                    msg: 'Producto actualizado correctamente'
+                })
             } else {
-                res.status(400).json({msg: 'No se pudo actualizar el producto'})
+                res.status(400).json({
+                    success: false,
+                    msg: 'No se pudo actualizar el producto'
+                })
             }
         } catch (error) {
             console.error(error)
@@ -78,9 +84,15 @@ class InventarioController {
             const {id_insumo, estado} = req.body
             const resultado = await InventarioModel.cambiarEstadoProducto({id_insumo, estado})
             if(resultado > 0){
-                res.status(200).json({msg: 'Estado del producto cambiado correctamente'})
+                res.status(201).json({
+                    success: true,
+                    msg: 'Producto actualizado correctamente'
+                })
             } else {
-                res.status(400).json({msg: 'No se pudo cambiar el estado del producto'})
+                res.status(400).json({
+                    success: false,
+                    msg: 'No se pudo actualizar el producto'
+                })
             }
         } catch (error) {
             console.error(error)

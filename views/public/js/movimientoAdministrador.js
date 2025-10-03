@@ -1,10 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // llamamos a todos las funciones que cargan los datos al iniciar\
+    // llamamos a todos las funciones que cargan los datos al iniciar
+
     obtenerMovimientos()
     cargarProductos()
     alertasStockBajo()
+
+    document.getElementById('responsable_movimiento').value = responsable
+    console.log(responsable)
     document.getElementById('formMovimientoInventario').addEventListener('submit', agregarMovimiento)
 })
+
+const usuario = JSON.parse(localStorage.getItem('usuario') || '{}')
+const responsable = usuario.nombre_usuario
 
 async function obtenerMovimientos() {
     const res = await fetch('http://localhost:3000/movimientos/historial')
@@ -35,7 +42,7 @@ async function obtenerMovimientos() {
 }
 
 async function cargarProductos() {
-    const res = await fetch('http://localhost:3000/movimientos/productos')
+    const res = await fetch(url)
     const productos = await res.json()
     const select = document.getElementById('producto_movimiento')
     select.innerHTML = '<option value="">Seleccione</option>'
@@ -56,7 +63,7 @@ async function agregarMovimiento(e) {
         cantidad: document.getElementById('cantidad_movimiento').value,
         // fecha: Date.now(),
         descripcion: document.getElementById('descripcion_movimiento').value,
-        responsable: document.getElementById('responsable_movimiento').value
+        responsable: document.getElementById('responsable_movimiento').value.trim()
     };
 
     console.log(data);
@@ -70,7 +77,7 @@ async function agregarMovimiento(e) {
     //     }
     // }
 
-    // Determinar la URL según el tipo de movimiento
+    // Determinar la URL según el tipo de movimiento 
     let url;
     const tipoMovimiento = document.getElementById('tipo_movimiento').value
     console.log(tipoMovimiento)
@@ -93,6 +100,7 @@ async function agregarMovimiento(e) {
     alert(result.msg);
     if (result.success) {
         document.getElementById('formMovimientoInventario').reset();
+        document.getElementById('responsable_movimiento').value = responsable
         obtenerMovimientos();
         cargarProductos();
     }
