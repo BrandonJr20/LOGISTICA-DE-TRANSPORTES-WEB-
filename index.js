@@ -16,6 +16,7 @@ const mantenimientosRoutes = require('./routes/mantenimientosRoutes');
 const ejemploRoutes = require('./routes/ejemploRoutes');
 const inventarioRoutes = require('./routes/inventarioRoutes')
 const movimientoRoutes = require('./routes/movimientoRoutes') 
+const insumoMantenimientoRoutes = require('./routes/insumoMantRoutes')
 const authRoutes = require('./routes/authRoutes');
 
 // Middleware
@@ -38,6 +39,7 @@ app.use('/mantenimientos', mantenimientosRoutes);
 app.use('/ejemplos', ejemploRoutes);
 app.use('/inventario', inventarioRoutes);
 app.use('/movimientos', movimientoRoutes);
+app.use('/insumoMantenimiento', insumoMantenimientoRoutes)
 app.use('/login', authRoutes);
 
 const PORT = process.env.PORT || 3000;

@@ -42,7 +42,7 @@ async function obtenerMovimientos() {
 }
 
 async function cargarProductos() {
-    const res = await fetch(url)
+    const res = await fetch('http://localhost:3000/movimientos/productos')
     const productos = await res.json()
     const select = document.getElementById('producto_movimiento')
     select.innerHTML = '<option value="">Seleccione</option>'

@@ -521,35 +521,43 @@
                     <option value="">Seleccione</option>
                 </select>
 
-                <label for="id_insumo_asignar">Insumo:</label>
+                <!-- se carga con js -->
+                <!-- <label for="id_insumo_asignar">Insumo:</label>
                 <select id="id_insumo_asignar" name="id_insumo" required>
                     <option value="">Seleccione</option>
                 </select>
 
                 <label for="cantidad_usada">Cantidad Usada:</label>
-                <input type="number" id="cantidad_usada" name="cantidad_usada" required min="1">
+                <input type="number" id="cantidad_usada" name="cantidad_usada" required min="1"> -->
 
+                <h4>Insumos a Utilizar</h4>
+                <div id="contenedor-insumos">
+                    <!-- Los insumos se agregan dinámicamente aquí -->
+                </div>
+
+                <button type="button" id="btnAgregarInsumo">+ Agregar Insumo</button>
                 <button type="submit">Asignar Insumo</button>
                 <button type="reset" class="btnCancelar">Cancelar</button>
             </form>
 
-            <!-- Tabla de Insumos por Mantenimiento -->
-            <h3>Insumos Utilizados por Mantenimiento</h3>
-            <div class="filtro-container">
-                <label for="filtro_mantenimiento">Filtrar por Mantenimiento:</label>
-                <select id="filtro_mantenimiento">
-                    <option value="">Todos</option>
-                </select>
-            </div>
-
             <table id="tablaInsumosMantenimiento">
                 <thead>
                     <tr>
-                        <th>ID Mantenimiento</th>
+                        <th>Id mantenimiento</th>
+                        <th>Id unidad</th>
+                        <th>placa</th>
                         <th>Unidad</th>
-                        <th>Insumo</th>
+                        <th>Tipo Mantenimiento</th>
+                        <th>Id insumo</th>
+                        <th>Nombre insumo</th>
+                        <th>Tipo producto</th>
                         <th>Cantidad Usada</th>
-                        <th>Fecha Mantenimiento</th>
+                        <th>Descripcion</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Kilometraje</th>
+                        <th>Costo</th>
+                        <th>Estado</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -596,6 +604,7 @@
     <script src="public/js/usuariosAdministrador.js"></script>
     <script src='public/js/inventarioAdministrador.js'></script>
     <script src="public/js/movimientoAdministrador.js"></script>
+    <script src="public/js/insumoMantAdministrador.js"></script>
 
 </body>
 

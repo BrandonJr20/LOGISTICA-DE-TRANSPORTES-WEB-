@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   obtenerUnidades();
   obtenerTiposMantenimiento();
-  obtenerHistorial();
+  obtenerHistorialMantenimiento();
 
   document.getElementById('formAsignarMantenimiento').addEventListener('submit', asignarMantenimiento);
   document.getElementById('formFinalizarMantenimiento').addEventListener('submit', finalizarMantenimiento);
@@ -84,14 +84,14 @@ async function finalizarMantenimiento(e) {
   }
 }
 
-async function obtenerHistorial() {
+async function obtenerHistorialMantenimiento() {
   try {
     const res = await fetch('http://localhost:3000/mantenimientos/historial');
     const data = await res.json();
 
+    console.log(data)
     const tbody = document.querySelector('#tablaHistorial_Mant tbody');
     tbody.innerHTML = '';
-    console.log(data);
     data.forEach(row => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
