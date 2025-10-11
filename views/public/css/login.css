@@ -14,11 +14,11 @@
     --GrisMedio: #524944;
     --GrisClaro: #6c6a66;
     --gris: #b3b2b0;
-    
-    --colorAmarillo: hsl(47, 80%, 63%) ;
-    --colorWhite: hsl(0, 0%, 100%) ;
-    --colorGray500: hsl(0, 0%, 42%) ;
-    --colorGray950: hsl(0, 0%, 7%) ;
+
+    --colorAmarillo: hsl(47, 80%, 63%);
+    --colorWhite: hsl(0, 0%, 100%);
+    --colorGray500: hsl(0, 0%, 42%);
+    --colorGray950: hsl(0, 0%, 7%);
 }
 
 * {
@@ -42,23 +42,39 @@ body {
 .login-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     align-items: center;
-    height: 50vh;
+    justify-content: center;
     border-radius: 10px;
     padding: 2vw;
     border: 2px black solid;
-    background-color:white;
+    background-color: white;
     box-shadow: 7px 7px 2px;
+
+}
+
+.descripcion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+i {
+    padding: 10px;
+    border-radius: 50px 50px 0 0;
+    font-size: 2rem;
 }
 
 h2 {
     margin: 1vw 0;
     color: black;
-    font-weight: 900;
+    text-align: center;
+    overflow: hidden;
+    border-right: 5px solid;
+    white-space: nowrap;
+    animation: escribir steps(14) 1.6s forwards;
 }
 
-.login-container form{
+.login-container form {
     border-radius: 10px;
     height: 100%;
     display: flex;
@@ -69,39 +85,69 @@ h2 {
     padding-top: 1vw;
 }
 
-input, button{
-    border: 1px solid;
+input,
+button {
     border-radius: 5px;
-    padding: 0.5vw 1vw ;
-    margin: 1vw 4vw;
+    padding: 0.5vw 1vw;
+    margin-top: 0;
 }
 
-button{
+button {
     font-size: 20px;
-    font-weight: 700;
-    color: white;
-    background-color: var(--Terracota);
+    font-weight: 900;
+    color: black;
+    border-top: none;
+    border-left: none;
+    transition: background-color 0.5s, transform 0.5s;
+    background-color: var(--colorAmarillo);
 }
 
-input:hover, input:enabled{
-    animation: bordeNaranja 1s alternate-reverse infinite;
+input:hover,
+input:enabled {
     cursor: pointer;
 }
 
-button:hover{
+button:hover {
     transform: scale(1.01);
     cursor: pointer;
-    background-color: var(--Naranja);
+    color: var(--colorAmarillo);
+    background-color: black;
 }
 
-@keyframes bordeNaranja {
-    0%{
-        border: 1px solid var(--gris);
+.password {
+    margin: 1vw 0;
+    border: 2px solid;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.password i {
+    position: absolute;
+    cursor: pointer;
+    right: 0.1vw;
+    color: black;
+    font-size: 18px;
+    z-index: 999;
+}
+
+.password i:hover {
+    color: #007bff;
+}
+.password input{
+    border: none;
+}
+
+
+@keyframes escribir {
+
+    0% {
+        width: 0;
     }
-    50%{
-        border: 2px solid var(--Naranja);
+
+    100% {
+        width: 100%;
     }
-    100%{
-        border: 1px solid var(--Terracota);
-    }
+
 }

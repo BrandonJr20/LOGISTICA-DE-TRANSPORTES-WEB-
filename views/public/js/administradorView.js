@@ -146,24 +146,16 @@ document.addEventListener('DOMContentLoaded', function () {
     // Función completa para cerrar sesión
     async function cerrarSesion() {
         try {
-            console.log('Iniciando proceso de cierre de sesión...');
-
             const token = localStorage.getItem('authToken');
 
             if (!token) {
-                console.log('No hay token, redirigiendo al login');
                 limpiarDatosLocales();
                 window.location.href = '../';
                 return;
             }
 
-            // Mostrar confirmación al usuario
-            const confirmar = confirm('¿Estás seguro de que deseas cerrar sesión?');
-            if (!confirmar) {
-                return;
-            }
-
-            console.log('Enviando petición de logout al servidor...'); //Aca esta el error
+            const confirmar = await mostrarDialogoConfirmacion('¿Estás seguro de que deseas cerrar sesión?');
+            if (!confirmar) return;
 
             const response = await fetch('http://localhost:3000/login/logout', {
                 method: 'POST',
@@ -174,30 +166,24 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             const data = await response.json();
-            console.log('Respuesta del servidor:', data);
 
             if (data.success) {
-                console.log('Logout exitoso en servidor');
                 limpiarDatosLocales();
-                alert('Sesión cerrada correctamente');
+                await mostrarDialogo('Sesión cerrada correctamente');
                 window.location.href = '../';
             } else {
-                console.error('Error en logout del servidor:', data.mensaje);
-                // Aún así, limpiar datos locales y redireccionar
                 limpiarDatosLocales();
-                alert('Sesión cerrada localmente');
+                await mostrarDialogo('Sesión cerrada localmente (error en servidor)');
                 window.location.href = '../';
             }
 
         } catch (error) {
-            console.error('Error en cerrarSesion:', error);
-
-            // En caso de error, forzar logout local
             limpiarDatosLocales();
-            alert('Error de conexión. Cerrando sesión localmente.');
+            await mostrarDialogo('Error de conexión. Cerrando sesión localmente.');
             window.location.href = '../';
         }
     }
+
 
     // Función para limpiar datos locales
     function limpiarDatosLocales() {

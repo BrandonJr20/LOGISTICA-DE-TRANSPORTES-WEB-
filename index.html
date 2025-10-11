@@ -1,22 +1,50 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Iniciar sesión</title>
   <link rel="stylesheet" href="/views/public/css/login.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
   <div class="login-container">
-    <h2>Iniciar sesión</h2>
+    <div class="descripcion">
+      <h2>Iniciar sesión</h2>
+    </div>
     <form id="loginForm">
       <input type="text" id="nombre_usuario" name="nombre_usuario" placeholder="Nombre de usuario" required />
-      <input type="text" id="contrasena" name="contrasena" placeholder="Contraseña" required />
+      <div class="password">
+        <input type="password" id="contrasena" name="contrasena" placeholder="Contraseña" required />
+        <i class="fa-solid fa-eye" id="visualizarPassword"></i>
+      </div>
       <button type="submit">Entrar</button>
       <div class="error" id="errorMensaje"></div>
     </form>
   </div>
 
   <script src="/views/public/js/login.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script>
+
+    const verPassword = document.getElementById('visualizarPassword')
+    const contrasena = document.getElementById('contrasena')
+
+    verPassword.addEventListener('click', () => {
+      const isPassword = contrasena.type === 'password'
+      if (contrasena.type === 'password') {
+        contrasena.type = 'text';
+      } else {
+        contrasena.type = 'password';
+      }
+
+      verPassword.classList.toggle('fa-eye')
+      verPassword.classList.toggle('fa-eye-slash')
+    })
+
+  </script>
 </body>
+
 </html>
