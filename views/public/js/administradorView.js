@@ -193,11 +193,9 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.removeItem('currentSection');
     }
 
-    // Verificar token cada 5 minutos
     setInterval(() => {
         const token = localStorage.getItem('authToken');
         if (token) {
-            // Verificar si el token sigue siendo válido
             fetch('/login/protected', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -206,25 +204,24 @@ document.addEventListener('DOMContentLoaded', function () {
             })
                 .then(response => {
                     if (!response.ok) {
-                        console.log('⚠️ Token expirado, cerrando sesión automáticamente');
+                        console.log('Token expirado, cerrando sesión automáticamente');
                         limpiarDatosLocales();
-                        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
-                        window.location.href = '../';
+                        mostrarDialogo('Tu sesión ha expirado. Serás redirigido al inicio.').then(() => {
+                            window.location.href = '../';
+                        });
                     }
                 })
                 .catch(error => {
-                    console.log('⚠️ Error verificando token:', error);
+                    console.log('Error verificando token:', error);
                 });
         }
-    }, 5 * 60 * 1000); // 5 minutos
+    }, 5 * 60 * 1000);
 
-    // Detectar cierre de navegador para logout automático
-    window.addEventListener('beforeunload', async (event) => {
+    // Cierre automático al cerrar navegador
+    window.addEventListener('beforeunload', async () => {
         const token = localStorage.getItem('authToken');
         if (token) {
             try {
-                // Usar navigator.sendBeacon para envío confiable al cerrar
-                const data = new FormData();
                 navigator.sendBeacon('/login/logout', JSON.stringify({}));
             } catch (error) {
                 console.log('Error en logout automático:', error);
@@ -232,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Detectar inactividad del usuario
+    // Detección de inactividad
     let tiempoInactividad = 0;
     const TIEMPO_MAX_INACTIVIDAD = 30 * 60 * 1000; // 30 minutos
 
@@ -240,20 +237,19 @@ document.addEventListener('DOMContentLoaded', function () {
         tiempoInactividad = 0;
     }
 
-    // Eventos que indican actividad del usuario
     ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
         document.addEventListener(event, reiniciarTiempoInactividad);
     });
 
-    // Verificar inactividad cada minuto
     setInterval(() => {
-        tiempoInactividad += 60 * 1000; // 1 minuto
-
+        tiempoInactividad += 60 * 1000;
         if (tiempoInactividad >= TIEMPO_MAX_INACTIVIDAD) {
-            alert('Tu sesión ha expirado por inactividad.');
-            cerrarSesion();
+            mostrarDialogo('Tu sesión ha expirado por inactividad.').then(() => {
+                cerrarSesion();
+            });
         }
-    }, 60 * 1000); // Verificar cada minuto
+    }, 60 * 1000);
+
 
     // Inicializar vista
     const lastSection = localStorage.getItem('currentSection');

@@ -6,25 +6,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('formAsignacion').addEventListener('submit', async (e) => {
         e.preventDefault();
+
         const id_conductor = document.getElementById('id_conductor_asignacion').value;
         const id_unidad = document.getElementById('id_unidad_asignacion').value;
         const fecha_inicio = document.getElementById('fecha_inicio').value;
 
-        const res = await fetch('http://localhost:3000/asignaciones/asignar', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id_conductor, id_unidad, fecha_inicio })
-        });
+        if (await mostrarDialogoConfirmacion(`¿Estás seguro de asignar la unidad ${id_unidad} al conductor ${id_conductor}?`)) {
+            try {
+                const res = await fetch('http://localhost:3000/asignaciones/asignar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id_conductor, id_unidad, fecha_inicio })
+                });
 
-        const data = await res.json();
-        alert(data.msg);
+                const data = await res.json();
+
+                // Manejo centralizado según el código HTTP
+                switch (res.status) {
+                    case 201:
+                        await mostrarDialogo(` ${data.msg}`);
+                        break;
+                    case 400:
+                        await mostrarDialogo(` ${data.msg}`);
+                        break;
+                    case 500:
+                        await mostrarDialogo(`${data.error}`);
+                        break;
+                    default:
+                        await mostrarDialogo(` Error desconocido (${res.status})`);
+                }
+
+            } catch (err) {
+                console.error('Error de conexión:', err);
+                await mostrarDialogo('No se pudo conectar con el servidor.');
+            }
+        } else {
+            await mostrarDialogo('Asignación cancelada.');
+        }
+
+        e.target.reset();
         obtenerAsignacionesActivas();
         obtenerHistorial();
     });
 });
 
+
 async function cargarConductores() {
-    const res = await fetch('http://localhost:3000/conductores'); 
+    const res = await fetch('http://localhost:3000/conductores');
     const conductores = await res.json();
     const select = document.getElementById('id_conductor_asignacion');
     select.innerHTML = '<option value="">Seleccione</option>';

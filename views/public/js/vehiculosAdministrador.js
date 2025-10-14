@@ -6,19 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     obtenerVehiculos()
 
-    function formatearFechaDate(fecha) {
-        const d = new Date(fecha).getDate();
-
-        const year = new Date(fecha).getFullYear();
-        const month = (new Date(fecha).getMonth() + 1).toString().padStart(2, '0');
-        const day = (new Date(fecha).getDate() + 1).toString().padStart(2, '0');
-
-        // new Date(conductor.fecha_ingreso).getDate() + 1).toString().padStart(2, '0')}-${(new Date(conductor.fecha_ingreso).getMonth() + 1).toString().padStart(2, '0')}-${new Date(conductor.fecha_ingreso).getFullYear()
-
-        return `${year}-${month}-${day}`;
-    }
-
-
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -37,23 +24,34 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             if (id) {
                 // Actualizar
-                await fetch(`${apiUrl}/${id}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(datos)
-                });
+                if (await mostrarDialogoConfirmacion('¿Estás seguro de actualizar este vehículo?')) {
+                    await fetch(`${apiUrl}/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(datos)
+                    });
+                    await mostrarDialogo('Vehículo actualizado correctamente');
+                } else {
+                    await mostrarDialogo('Vehículo no actualizado');
+                }
             } else {
                 // Insertar
-                await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(datos)
-                });
+                if (await mostrarDialogoConfirmacion('¿Estás seguro de agregar este vehículo?')) {
+                    await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(datos)
+                    });
+                    await mostrarDialogo('Vehículo agregado correctamente');
+                } else {
+                    await mostrarDialogo('Vehículo no actualizado');
+                }
             }
             form.reset();
             document.getElementById('id_unidad').value = '';
             obtenerVehiculos();
         } catch (err) {
+            await mostrarDialogo('Error al guardar vehículo.', err);
             console.error('Error al guardar vehículo:', err);
         }
     })
@@ -74,24 +72,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${vehiculo.modelo}</td>
                     <td>${vehiculo.anio}</td>
                     <td>${vehiculo.kilometraje}</td>
-                    <td>${vehiculo.fecha_adquisicion}</td>
+                    <td>${formatearFechaDate(vehiculo.fecha_adquisicion)}</td>
                     <td>${vehiculo.tipoUnidad}</td>
                     <td>${vehiculo.estado}</td>
                     <td>
-                        <button class="editar-vehiculo" data-id="${vehiculo.id_unidad}">Editar</button>
-                        <button class="eliminar-vehiculo" data-id="${vehiculo.id_unidad}">Eliminar</button>
+                        <button class="editar" data-id="${vehiculo.id_unidad}">Editar</button>
+                        <button class="eliminar" data-id="${vehiculo.id_unidad}">Eliminar</button>
                     </td>`
                 tabla.appendChild(tr)
             })
 
             agregarEventosAcciones();
         } catch (err) {
+            await mostrarDialogo('Error al obtener vehículos', err);
             console.error('Error al obtener vehículos:', err)
         }
     }
 
     function agregarEventosAcciones() {
-        document.querySelectorAll('.editar-vehiculo').forEach(btn => {
+        document.querySelectorAll('.editar').forEach(btn => {
             btn.addEventListener('click', async (a) => {
                 const id = a.target.dataset.id;
                 try {
@@ -108,19 +107,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('tipoUnidad').value = vehiculo.tipoUnidad;
                     document.getElementById('estado_vehiculo').value = vehiculo.estado;
                 } catch (err) {
+                    await mostrarDialogo('Error al cargar vehículo para editar', err);
                     console.error('Error al cargar vehículo para editar:', err);
                 }
             });
         });
 
-        document.querySelectorAll('.eliminar-vehiculo').forEach(boton => {
+        document.querySelectorAll('.eliminar').forEach(boton => {
             boton.addEventListener('click', async (e) => {
                 const id = e.target.dataset.id;
-                if (confirm('¿Estás seguro de eliminar este vehículo?')) {
+                if (await mostrarDialogoConfirmacion('¿Estás seguro de eliminar este vehículo? Esta acción no se puede deshacer.')) {
                     try {
                         await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
+                        await mostrarDialogo('Vehículo eliminado correctamente');
                         obtenerVehiculos();
                     } catch (err) {
+                        await mostrarDialogo('Error al eliminar vehículo', err);
                         console.error('Error al eliminar vehículo:', err);
                     }
                 }

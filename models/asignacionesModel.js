@@ -14,13 +14,24 @@ const AsignacionModel = {
     },
 
     async asignarUnidad({ id_conductor, id_unidad, fecha_inicio }) {
-        const request = new db.sql.Request();
-        request.input('id_conductor', db.sql.Int, id_conductor);
-        request.input('id_unidad', db.sql.Int, id_unidad);
-        request.input('fecha_inicio', db.sql.DateTime, fecha_inicio);
+        try {
+            const request = new db.sql.Request();
+            request.input('id_conductor', db.sql.Int, id_conductor);
+            request.input('id_unidad', db.sql.Int, id_unidad);
+            request.input('fecha_inicio', db.sql.DateTime, fecha_inicio);
 
-        const result = await request.execute('sp_AsignarUnidadAConductor');
-        return result.rowsAffected[0];
+            const result = await request.execute('sp_AsignarUnidadAConductor');
+
+            // Si tu SP devuelve algo en result.recordset, puedes validarlo
+            if (result.returnValue !== 0) {
+                throw new Error('El procedimiento almacenado devolvió un error.');
+            }
+
+            return result.rowsAffected[0];
+        } catch (error) {
+            console.error('Error en modelo asignarUnidad:', error);
+            throw new Error('Error al asignar unidad: ' + error.message);
+        }
     },
 
     async finalizarAsignacion({ id_asignacion, fecha_fin }) {

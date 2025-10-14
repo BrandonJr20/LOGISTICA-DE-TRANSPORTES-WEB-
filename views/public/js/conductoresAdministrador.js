@@ -19,31 +19,41 @@ document.addEventListener('DOMContentLoaded', () => {
             licencia: document.getElementById('licencia').value,
             telefono: document.getElementById('telefono').value,
             direccion: document.getElementById('direccion').value,
-            fecha_ingreso: document.getElementById('fecha_ingreso').value, // formato YYYY-MM-DD
+            fecha_ingreso: formatearFechaDate(document.getElementById('fecha_ingreso').value), // formato YYYY-MM-DD
             activo: parseInt(document.getElementById('activo_conductor').value) // 1 o 0
         };
 
         try {
             if (id) {
                 // Actualizar
-                await fetch(`${apiUrl}/${id}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(datos)
-                });
+                if (await mostrarDialogoConfirmacion('¿Estás seguro de actualizar este conductor?')) {
+                    await fetch(`${apiUrl}/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(datos)
+                    });
+                    await mostrarDialogo('Conductor actualizado correctamente');
+                } else {
+                    await mostrarDialogo('Conductor no actualizado');
+                }
             } else {
                 // Insertar
-                await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(datos)
-                });
+                if (await mostrarDialogoConfirmacion('¿Estás seguro de crear este conductor?')) {
+                    await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(datos)
+                    });
+                    await mostrarDialogo('Conductor creado correctamente');
+                } else {
+                    await mostrarDialogo('Conductor no creado');
+                }
             }
-
             form.reset();
             document.getElementById('id_conductor').value = '';
             obtenerConductores();
         } catch (err) {
+            await mostrarDialogo('Error al guardar conductor', err);
             console.error('Error al guardar conductor:', err);
         }
     });
@@ -67,11 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${conductor.licencia}</td>
                     <td>${conductor.telefono}</td>
                     <td>${conductor.direccion}</td>
-                    <td>${(new Date(conductor.fecha_ingreso).getDate() + 1).toString().padStart(2, '0')}-${(new Date(conductor.fecha_ingreso).getMonth() + 1).toString().padStart(2, '0')}-${new Date(conductor.fecha_ingreso).getFullYear()}</td>
-                    <td>${conductor.activo_conductor  ? 'Habilitado' : 'Inhabilitado'}</td>
+                    <td>${formatearFechaDate(conductor.fecha_ingreso)}</td>
+                    <td>${conductor.activo_conductor ? 'Habilitado' : 'Inhabilitado'}</td>
                     <td>
-                        <button class="editar-conductor" data-id="${conductor.id_conductor}">Editar</button>
-                        <button class="eliminar-conductor" data-id="${conductor.id_conductor}">Eliminar</button>
+                        <button class="editar" data-id="${conductor.id_conductor}">Editar</button>
+                        <button class="eliminar" data-id="${conductor.id_conductor}">Eliminar</button>
                     </td>
                 `;
                 tablaBody.appendChild(tr);
@@ -79,13 +89,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             agregarEventosAcciones();
         } catch (err) {
+            await mostrarDialogo('Error al obtener conductores', err);
             console.error('Error al obtener conductores:', err);
         }
     }
 
     // Agregar eventos a botones editar y eliminar
     function agregarEventosAcciones() {
-        document.querySelectorAll('.editar-conductor').forEach(btn => {
+        document.querySelectorAll('.editar').forEach(btn => {
             btn.addEventListener('click', async (a) => {
                 const id = a.target.dataset.id;
                 try {
@@ -99,23 +110,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('licencia').value = conductor.licencia;
                     document.getElementById('telefono').value = conductor.telefono;
                     document.getElementById('direccion').value = conductor.direccion;
-                    document.getElementById('fecha_ingreso').value = conductor.fecha_ingreso;
+                    document.getElementById('fecha_ingreso').value = formatearFechaDate(conductor.fecha_ingreso);
                     document.getElementById('activo_conductor').value = conductor.activo_conductor ? 1 : 0;
                 } catch (err) {
+                    await mostrarDialogo('Error al cargar conductor para editar', err);
                     console.error('Error al cargar conductor para editar:', err);
                 }
             });
         });
 
-        document.querySelectorAll('.eliminar-conductor').forEach(btn => {
+        document.querySelectorAll('.eliminar').forEach(btn => {
             btn.addEventListener('click', async (a) => {
                 const id = a.target.dataset.id;
-                if (confirm('¿Estás seguro de eliminar este conductor?')) {
+                if (
+                    await mostrarDialogoConfirmacion('¿Estás seguro de eliminar este conductor? Esta acción no se puede deshacer.')) {
                     try {
-                        await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
+                        await fetch(`
+                            ${apiUrl}/${id}`, 
+                            { method: 'DELETE' }
+                        );
+                        await mostrarDialogo('Conductor eliminado correctamente');
                         obtenerConductores();
                         location.reload()
                     } catch (err) {
+                        await mostrarDialogo('Error al eliminar conductor', err);
                         console.error('Error al eliminar conductor:', err);
                     }
                 }

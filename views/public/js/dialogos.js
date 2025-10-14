@@ -1,3 +1,4 @@
+// Animación de cierre con promesa
 function cerrarDialogoAnimado(dialogo) {
     return new Promise(resolve => {
         dialogo.classList.add('cerrando');
@@ -9,6 +10,7 @@ function cerrarDialogoAnimado(dialogo) {
     });
 }
 
+// Alerta simple (OK)
 function mostrarDialogo(mensaje) {
     return new Promise(resolve => {
         const dialogo = document.getElementById('dialogo-alerta');
@@ -19,7 +21,6 @@ function mostrarDialogo(mensaje) {
 
         mensajeAlerta.textContent = mensaje;
         btnCancelar.style.display = 'none';
-
         dialogo.showModal();
 
         const cerrar = async () => {
@@ -32,6 +33,7 @@ function mostrarDialogo(mensaje) {
     });
 }
 
+// Alerta de confirmación (Aceptar / Cancelar)
 function mostrarDialogoConfirmacion(mensaje) {
     return new Promise(resolve => {
         const dialogo = document.getElementById('dialogo-alerta');
@@ -42,7 +44,6 @@ function mostrarDialogoConfirmacion(mensaje) {
 
         mensajeAlerta.textContent = mensaje;
         btnCancelar.style.display = 'inline-block';
-
         dialogo.showModal();
 
         const confirmar = async () => {

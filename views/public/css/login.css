@@ -17,8 +17,13 @@
 
     --colorAmarillo: hsl(47, 80%, 63%);
     --colorWhite: hsl(0, 0%, 100%);
-    --colorGray500: hsl(0, 0%, 42%);
+    --colorGrey: hsl(0, 0%, 96%);
+    --colorRojo: hsl(0, 75%, 55%);
+    --colorVerde: hsl(145, 60%, 45%);
+    --colorAzul: hsl(210, 80%, 55%);
+    --colorGray500: hsl(0, 0%, 89%);
     --colorGray950: hsl(0, 0%, 7%);
+    --sombra: 4px 6px 1px 2px;
 }
 
 * {
@@ -92,7 +97,7 @@ button {
     margin-top: 0;
 }
 
-button {
+.btnLogin {
     font-size: 20px;
     font-weight: 900;
     color: black;
@@ -150,4 +155,92 @@ button:hover {
         width: 100%;
     }
 
+}
+
+.btnAceptar {
+    background-color: var(--colorVerde);
+
+    box-shadow: var(--sombra);
+    border: 2px solid black;
+    transition: transform 0.3s, background-color 0.3s ease-in-out;
+}
+
+.btnAceptar:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+    color: var(--colorVerde);
+    background-color: black;
+}
+
+.eliminar, .btnCancelar {
+    background-color: var(--colorRojo);
+
+    box-shadow: var(--sombra);
+    border: 2px solid black;
+}
+
+.alertas {
+    border: 2px solid black;
+    background-color: var(--colorWhite);
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+    padding: 1.5rem;
+    text-align: center;
+    width: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: aparecer 0.1s ease-out;
+
+    .cerrar-alerta::picker{
+        animation: aparecer 2s ease-out;
+    }
+}
+
+.alertas::backdrop {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.contenido-alerta {
+    position: relative;
+}
+
+.cerrar-alerta {
+    display: none;
+}
+
+.acciones-alerta {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Cuando se está cerrando */
+.alertas.cerrando {
+    animation: desaparecer 0.2s ease-in forwards;
+}
+
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -48%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes desaparecer {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -48%) scale(0.9);
+    }
 }

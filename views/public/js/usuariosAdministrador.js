@@ -23,24 +23,35 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             if (id) {
                 // Actualizar
-                await fetch(`${apiUrl}/${id}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(datos)
-                });
+                if (await mostrarDialogoConfirmacion('¿Estás seguro de crear este usuario?')) {
+                    await mostrarDialogo('Usuario creado correctamente');
+                    await fetch(`${apiUrl}/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(datos)
+                    });
+                } else {
+                    await mostrarDialogo('Usuario no actualizado');
+                }
             } else {
                 // Insertar
-                await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(datos)
-                });
+                if (await mostrarDialogoConfirmacion('¿Estás seguro de crear este usuario?')) {
+                    await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(datos)
+                    });
+                    await mostrarDialogo('Usuario creado correctamente');
+                } else {
+                    await mostrarDialogo('Usuario no creado');
+                }
             }
 
             form.reset();
             document.getElementById('id_usuario').value = '';
             obtenerUsuarios();
         } catch (err) {
+            await mostrarDialogo('Error al guardar usuario', err);
             console.error('Error al guardar usuario:', err);
         }
     });
@@ -73,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             agregarEventosAcciones();
         } catch (err) {
+            await mostrarDialogo('Error al obtener usuarios', err);
             console.error('Error al obtener usuarios:', err);
         }
     }
@@ -95,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     console.log(usuario)
                 } catch (err) {
+                    await mostrarDialogo('Error al cargar usuario para editar', err);
                     console.error('Error al cargar usuario para editar:', err);
                 }
             });
@@ -103,11 +116,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.eliminar').forEach(btn => {
             btn.addEventListener('click', async (e) => {
                 const id = e.target.dataset.id;
-                if (confirm('¿Estás seguro de eliminar este usuario?')) {
+                if (
+                    await mostrarDialogoConfirmacion('¿Estás seguro de eliminar este usuario?')) {
                     try {
                         await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
+                        await mostrarDialogo('Usuario eliminado correctamente');
                         obtenerUsuarios();
                     } catch (err) {
+                        await mostrarDialogo('Error al eliminar usuario', err);
                         console.error('Error al eliminar usuario:', err);
                     }
                 }

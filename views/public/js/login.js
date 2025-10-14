@@ -27,7 +27,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async function 
       localStorage.setItem('authToken', data.token);
       localStorage.setItem('usuario', JSON.stringify(data.usuario));
 
-      alert(`Bienvenido ${data.usuario.nombre_usuario} (rol: ${data.usuario.rol})`);
+      await mostrarDialogo(`Bienvenido ${data.usuario.nombre_usuario} (rol: ${data.usuario.rol})`);
 
       if (data.usuario.rol === 'admin') {
         // Ruta absoluta desde la raíz del servidor

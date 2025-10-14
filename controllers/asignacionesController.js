@@ -31,14 +31,15 @@ class AsignacionController {
                 fecha_inicio
             });
 
+            // ✅ Si el procedimiento afectó filas, fue exitoso
             if (resultado > 0) {
-                res.status(400).json({ msg: 'No se pudo asignar la unidad.' });
-            } else {
                 res.status(201).json({ msg: 'Unidad asignada correctamente.' });
+            } else {
+                res.status(400).json({ msg: 'No se pudo asignar la unidad (sin cambios realizados).' });
             }
         } catch (error) {
-            console.error(error);
-            res.status(500).send('Error al asignar unidad.');
+            console.error('Error en el controlador:', error.message);
+            res.status(500).json({ msg: 'Error interno al asignar la unidad.', error: error.message });
         }
     }
 
