@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d989618.3512949286!2d-90.581181!3d14.329043!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sgt!4v1760577331725!5m2!1ses-419!2sgt" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+    <form id="formEntrega">
+        <input type="hidden" id="id_entrega">
+
+        <label for="fecha_entrega">Fecha de Entrega:</label>
+        <input type="date" id="fecha_entrega" name="fecha_entrega" required>
+
+        <label for="destino">Destino:</label>
+        <input type="text" id="destino" name="destino" required>
+
+        <label for="estado">Estado:</label>
+        <select id="estado" name="estado" required>
+            <option value="pendiente">Pendiente</option>
+            <option value="en_proceso">En Proceso</option>
+            <option value="completada">Completada</option>
+        </select>
+
+        <!-- Mapa interactivo -->
+        <h4>Ubicación</h4>
+        <p>Haz clic en el mapa para marcar el <b>punto de inicio</b> y luego el <b>punto de destino</b>.</p>
+        <div id="map" style="width:100%; height:300px; border-radius:10px; margin-bottom:10px;"></div>
+
+        <label for="lat_inicio">Inicio (Lat, Lng):</label>
+        <input type="text" id="lat_inicio" name="lat_inicio" readonly>
+        <input type="text" id="lng_inicio" name="lng_inicio" readonly>
+
+        <label for="lat_destino">Destino (Lat, Lng):</label>
+        <input type="text" id="lat_destino" name="lat_destino" readonly>
+        <input type="text" id="lng_destino" name="lng_destino" readonly>
+
+        <label for="distancia">Distancia estimada:</label>
+        <input type="text" id="distancia" readonly>
+
+        <label for="tiempo_estimado">Tiempo estimado:</label>
+        <input type="text" id="tiempo_estimado" readonly>
+
+        <button type="submit">Guardar Entrega</button>
+        <button type="button" id="btnCancelarEntrega">Cancelar</button>
+    </form>
+
+    <!-- Dependencias Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+        const map = L.map('map').setView([14.6349, -90.5069], 12); // Centro en Guatemala
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        let markerInicio = null;
+        let markerDestino = null;
+        let polyline = null;
+
+        // Escucha clics en el mapa
+        map.on('click', function (e) {
+            if (!markerInicio) {
+                // Primer clic: punto de inicio
+                markerInicio = L.marker(e.latlng, { draggable: true })
+                    .addTo(map)
+                    .bindPopup("📍 Punto de inicio").openPopup();
+
+                document.getElementById("lat_inicio").value = e.latlng.lat.toFixed(6);
+                document.getElementById("lng_inicio").value = e.latlng.lng.toFixed(6);
+            }
+            else if (!markerDestino) {
+                // Segundo clic: punto de destino
+                markerDestino = L.marker(e.latlng, { draggable: true })
+                    .addTo(map)
+                    .bindPopup("🎯 Punto de destino").openPopup();
+
+                document.getElementById("lat_destino").value = e.latlng.lat.toFixed(6);
+                document.getElementById("lng_destino").value = e.latlng.lng.toFixed(6);
+
+                // Dibuja la línea entre los dos puntos
+                dibujarRuta();
+            }
+        });
+
+        // Redibuja la ruta al mover los marcadores
+        function dibujarRuta() {
+            if (polyline) map.removeLayer(polyline);
+            const latlngs = [markerInicio.getLatLng(), markerDestino.getLatLng()];
+            polyline = L.polyline(latlngs, { color: 'blue', weight: 4 }).addTo(map);
+            map.fitBounds(polyline.getBounds());
+            calcularDistanciaYTiempo();
+        }
+
+        // Calcular distancia y tiempo estimado (fórmula Haversine)
+        function calcularDistanciaYTiempo() {
+            const inicio = markerInicio.getLatLng();
+            const destino = markerDestino.getLatLng();
+
+            const R = 6371; // Radio de la Tierra en km
+            const dLat = (destino.lat - inicio.lat) * Math.PI / 180;
+            const dLon = (destino.lng - inicio.lng) * Math.PI / 180;
+
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(inicio.lat * Math.PI / 180) * Math.cos(destino.lat * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distancia = R * c; // en km
+            const velocidadPromedio = 60; // km/h estimado
+
+            const tiempo = distancia / velocidadPromedio; // en horas
+
+            document.getElementById("distancia").value = `${distancia.toFixed(2)} km`;
+            document.getElementById("tiempo_estimado").value = `${(tiempo * 60).toFixed(0)} min`;
+        }
+    </script>
+
+
+
+</body>
+
+</html>

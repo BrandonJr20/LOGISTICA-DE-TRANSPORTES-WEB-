@@ -48,18 +48,25 @@ async function asignarMantenimiento(e) {
     kilometraje: parseInt(document.getElementById('kilometraje_mantenimiento').value)
   };
 
-  console.log(data)
-  const res = await fetch('http://localhost:3000/mantenimientos/asignar/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  });
+  let res;
+  if (await mostrarDialogoConfirmacion('¿Estás seguro de asignar este mantenimiento?')) {
+    res = await fetch('http://localhost:3000/mantenimientos/asignar/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    await mostrarDialogo('Mantenimiento asignado correctamente');
+  } else {
+    await mostrarDialogo('Mantenimiento no asignado');
+    return;
+  }
+
 
   const result = await res.json();
-  alert(result.msg);
   if (result.success) {
     document.getElementById('formAsignarMantenimiento').reset();
-    obtenerHistorial();
+    obtenerHistorialMantenimiento();
+    obtenerUnidades();
   }
 }
 
@@ -70,17 +77,28 @@ async function finalizarMantenimiento(e) {
     costo: parseFloat(document.getElementById('costo').value)
   };
 
-  const res = await fetch('http://localhost:3000/mantenimientos/finalizar/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  });
+  let res;
+  if (await mostrarDialogoConfirmacion('¿Estás seguro de finalizar este mantenimiento?')) {
+    res = await fetch('http://localhost:3000/mantenimientos/finalizar/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    await mostrarDialogo('Mantenimiento finalizado correctamente');
+  } else {
+    await mostrarDialogo('Mantenimiento no finalizado');
+    return;
+  }
 
   const result = await res.json();
-  alert(result.msg);
   if (result.success) {
     document.getElementById('formFinalizarMantenimiento').reset();
-    obtenerHistorial();
+    
+    const selectFinalizar = document.getElementById('id_unidad_finalizar');
+    const optionToRemove = selectFinalizar.querySelector(`option[value="${data.id_unidad}"]`);
+    if (optionToRemove) optionToRemove.remove();
+    obtenerHistorialMantenimiento();
+    obtenerUnidades();
   }
 }
 
@@ -99,8 +117,8 @@ async function obtenerHistorialMantenimiento() {
         <td>${row.txt_tipomantenimiento || '—'}</td>
         <td>${row.descripcion || '—'}</td>
         <td>${row.kilometraje ? `${row.kilometraje} km` : '—'}</td>
-        <td>${row.fecha_ini_mantenimiento ? new Date(row.fecha_ini_mantenimiento).toLocaleString() : '—'}</td>
-        <td>${row.fecha_fin_mantenimiento ? new Date(row.fecha_fin_mantenimiento).toLocaleString() : '—'}</td>
+        <td>${row.fecha_ini_mantenimiento ? formatearFechaDate(row.fecha_ini_mantenimiento) : '—'}</td>
+        <td>${row.fecha_fin_mantenimiento ? formatearFechaDate(row.fecha_fin_mantenimiento) : '—'}</td>
         <td>${row.costo !== null ? `Q${parseFloat(row.costo).toFixed(2)}` : '—'}</td>
         <td>${row.Id_insumos || '—'}</td>
         <td>${row.Descripcion_insumos || '—'}</td>

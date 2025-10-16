@@ -76,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${vehiculo.tipoUnidad}</td>
                     <td>${vehiculo.estado}</td>
                     <td>
-                        <button class="editar" data-id="${vehiculo.id_unidad}">Editar</button>
-                        <button class="eliminar" data-id="${vehiculo.id_unidad}">Eliminar</button>
+                        <button class="editar vehiculo" data-id="${vehiculo.id_unidad}">Editar</button>
+                        <button class="eliminar vehiculo" data-id="${vehiculo.id_unidad}">Eliminar</button>
                     </td>`
                 tabla.appendChild(tr)
             })

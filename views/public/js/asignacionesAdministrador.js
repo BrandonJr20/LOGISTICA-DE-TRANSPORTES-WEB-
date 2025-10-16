@@ -88,8 +88,8 @@ async function obtenerAsignacionesActivas() {
             <td>${row.id_asignacion}</td>
             <td>${row.nombre_completo}</td>
             <td>${row.placa}</td>
-            <td>${new Date(row.fecha_inicio).toLocaleString()}</td>
-            <td><button onclick="finalizarAsignacion(${row.id_asignacion})">Finalizar</button></td>
+            <td>${formatearFechaDate(row.fecha_inicio)}</td>
+            <td><button onclick="finalizarAsignacion(${row.id_asignacion})" class="finalizar">Finalizar</button></td>
         `;
         tbody.appendChild(tr);
     });
@@ -106,8 +106,8 @@ async function obtenerAsignacionesTodas() {
             <td>${row.id_asignacion}</td>
             <td>${row.nombre_completo}</td>
             <td>${row.placa}</td>
-            <td>${new Date(row.fecha_inicio).toLocaleString()}</td>
-            <td>${(row.fecha_inicio).toLocaleString()}</td>
+            <td>${formatearFechaDate(row.fecha_inicio)}</td>
+            <td>${formatearFechaDate(row.fecha_fin)}</td>
         `;
         tbody.appendChild(tr);
     });
@@ -115,15 +115,36 @@ async function obtenerAsignacionesTodas() {
 
 
 async function finalizarAsignacion(id_asignacion) {
-    const fecha_fin = new Date().toISOString();
-    const res = await fetch('http://localhost:3000/asignaciones/finalizar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id_asignacion, fecha_fin })
-    });
+    
+    if (await mostrarDialogoConfirmacion(`¿Estás seguro de finalizar la asignación ${id_asignacion}?`)) {
+        try {
+            const fecha_fin = formatearFechaDate(new Date());
+            const res = await fetch('http://localhost:3000/asignaciones/finalizar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id_asignacion, fecha_fin })
+            });
+            const data = await res.json();
+            switch (res.status) {
+                case 200:
+                    await mostrarDialogo(` ${data.msg}`);
+                    break;  
+                case 400:
+                    await mostrarDialogo(` ${data.msg}`);
+                    break;
+                case 500:
+                    await mostrarDialogo(`${data.error}`);
+                    break;  
+                default:
+                    await mostrarDialogo(` Error desconocido (${res.status})`);
+            }
+        } catch (err) {
+            await mostrarDialogo('No se pudo conectar con el servidor.', err);
+        }
+    } else {
+        await mostrarDialogo('Finalización cancelada.');
+    }
 
-    const data = await res.json();
-    alert(data.msg);
     obtenerAsignacionesActivas();
     obtenerAsignacionesTodas();
 }

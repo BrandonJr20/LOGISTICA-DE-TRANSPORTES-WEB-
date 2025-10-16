@@ -80,8 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${formatearFechaDate(conductor.fecha_ingreso)}</td>
                     <td>${conductor.activo_conductor ? 'Habilitado' : 'Inhabilitado'}</td>
                     <td>
-                        <button class="editar" data-id="${conductor.id_conductor}">Editar</button>
-                        <button class="eliminar" data-id="${conductor.id_conductor}">Eliminar</button>
+                        <button class="editar conductor" data-id="${conductor.id_conductor}">Editar</button>
+                        <button class="eliminar conductor" data-id="${conductor.id_conductor}">Eliminar</button>
                     </td>
                 `;
                 tablaBody.appendChild(tr);

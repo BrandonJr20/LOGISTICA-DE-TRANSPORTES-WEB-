@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     // llamamos a todos las funciones que cargan los datos al iniciar
-
     obtenerMovimientos()
     cargarProductos()
     alertasStockBajo()

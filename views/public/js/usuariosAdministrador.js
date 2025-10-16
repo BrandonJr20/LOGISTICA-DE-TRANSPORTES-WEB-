@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${usuario.rol}</td>
                     <td>${usuario.activo ? 'Habilitado' : 'Inhabilitado'}</td>
                     <td>
-                        <button class="editar" data-id="${usuario.id_usuario}">Editar</button>
-                        <button class="eliminar" data-id="${usuario.id_usuario}">Eliminar</button>
+                        <button class="editar usuario" data-id="${usuario.id_usuario}">Editar</button>
+                        <button class="eliminar usuario" data-id="${usuario.id_usuario}">Eliminar</button>
                     </td>
                 `;
 

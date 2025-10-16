@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONDUCTOR VIEW</title>
+</head>
+
+<body>
+
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <aside id="sidebar">
+        <nav>
+
+            <div class="perfil">
+                <img src="" alt="imagenquemada" width="100px" height="100px">
+                <h3>Nombre Conductor</h3>
+            </div>
+
+            <ul>
+                <li><a href="#principal" data-section="principal">Principal</a></li>
+                <li><a href="#informacion-personal" data-section="informacion-personal">Información Personal</a></li>
+                <li><a href="#entregas" data-section="entregas">Entregas</a></li>
+                <li><a href="#consumos" data-section="consumos">Consumos</a></li>
+                <li><a href="#incidentes" data-section="incidentes">Incidentes</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main>
+
+        <section id="principal">
+
+            <a href="#informacion-personal" id="personal">
+                <cards>
+                    <i class="fas fa-user"></i>
+                    <h3>Informacion Personal</h3>
+                </cards>
+            </a><a href="#entregas" id="entregas">
+                <cards>
+                    <i class="fas fa-box"></i>
+                    <h3>Entregas</h3>
+                </cards>
+            </a><a href="#consumos" id="consumos">
+                <cards>
+                    <i class="fas fa-gas-pump"></i>
+                    <h3>Consumos</h3>
+                </cards>
+            </a><a href="#incidentes" id="incidentes">
+                <cards>
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Incidentes</h3>
+                </cards>
+            </a>
+
+        </section>
+        <section id="informacion-personal">
+            <h2>Información Personal</h2>
+            <form id="formUsuario">
+                <input type="hidden" id="id_usuario">
+
+                <h3>Informacion de inicio de sesion</h3>
+                <label for="imagenPerfil">Foto de perfil</label>
+                <img id="imagenPerfil"  src="" alt="Imagen de Perfil" width="100px" height="100px">
+                <input type="file" id="imagen_perfil" name="imagen_perfil">
+
+                <label for="nombre_usuario">Nombre de Usuario:</label>
+                <input type="text" id="nombre_usuario" name="nombre_usuario" required>
+
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" id="correo" name="correo" required>
+
+                <label for="contrasena">Contraseña:</label>
+                <input type="text" id="contrasena" name="contrasena" required>
+
+                <h3>Información Personal</h3>
+                <label for="nombre_completo">Nombre completo:</label>
+                <input type="text" id="nombre_completo" name="nombre_completo" required>
+                <label for="dui"></label>DUI:</label>
+                <input type="text" id="dui" name="dui" required>
+                <label for="licencia">Licencia:</label>
+                <input type="text" id="licencia" name="licencia" required>
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" required>
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" required>
+
+                <button type="submit">Guardar Usuario</button>
+                <button type="button" id="btnEditar" class="editar usuario">Editar Usuario</button>
+                <button type="reset" class="cancelar usuario">Cancelar</button>
+            </form>
+
+            <h2>Historico</h2>
+            <div class="table-container">
+                <h3>Viajes Realizados</h3>
+                <table id="tablaUsuarios">
+                    <thead>
+                        <tr>
+                            <th>ID Viaje</th>
+                            <th>Fecha</th>
+                            <th>Destino</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos de los viajes se llenarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+                <h3></h3>Unidad Asignada</h3>
+                <table id="tablaUnidades">
+                    <thead>
+                        <tr>
+                            <th>ID Unidad</th>
+                            <th>Modelo</th>
+                            <th>Placa</th>
+                            <th>Año</th>
+                            <th>Consumo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos de las unidades se llenarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+                <h3>Total de incidentes</h3>
+                <table id="tablaIncidentes">
+                    <thead>
+                        <tr>
+                            <th>id_unidad</th>
+                            <th>placa</th>
+                            <th>cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos de los incidentes se llenarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="entregas">
+            <dialog id="registrarEntrega" class="modal">
+                <form id="formEntrega">
+                    <input type="hidden" id="id_entrega">
+
+                    <label for="id_unidad">Id Unidad:</label>
+                    <input type="text" id="id_unidad" name="id_unidad" readonly>
+
+                    <label for="placa">Placa:</label>
+                    <input type="text" id="placa" name="placa" readonly>
+
+                    <label for="id_conductor">Id Conductor:</label>
+                    <input type="text" id="id_conductor" name="id_conductor" readonly>
+
+                    <label for="nombre_conductor">Nombre del Conductor:</label>
+                    <input type="text" id="nombre_conductor" name="nombre_conductor" readonly>
+
+                    <label for="fecha_salida">Fecha de Salida:</label>
+                    <input type="datetime-local" id="fecha_salida" name="fecha_salida" required>
+
+                    <label for="fecha_llegada_estimada">Fecha de llegada estimada:</label>
+                    <input type="datetime-local" id="fecha_llegada_estimada" name="fecha_llegada_estimada" required>
+
+                    <label for="destino">Destino:</label>
+                    <input type="text" id="destino" name="destino" required>
+
+                    <label for="kilometraje_inicial">Kilometraje Inicial:</label>
+                    <input type="number" id="kilometraje_inicial" name="kilometraje_inicial" readonly>
+
+                    <label for="tipo_entrega">Tipo de Entrega:</label>
+                    <select name="tipo_entrega" id="tipo_entrega"></select>
+
+                    <button type="submit">Guardar Entrega</button>
+                    <button type="button" id="btnCancelarEntrega" class="cancelar entrega">Cancelar</button>
+                </form>
+            </dialog>
+            <button id="btnAbrirModal">Registrar Nueva Entrega</button>
+            
+            <h2>Entregas</h2>
+            <div class="table-container">   
+                <table id="tablaEntregas">
+                    <thead>
+                        <tr>
+                            <!-- <th>ID Entrega</th> -->
+                            <th>ID Unidad</th>
+                            <th>Placa</th>
+                            <!-- <th>ID Conductor</th> -->
+                            <th>Nombre Conductor</th>
+                            <th>Fecha de Salida</th>
+                            <th>Fecha de Llegada Estimada</th>
+                            <th>Fecha de Llegada Real</th>
+                            <th>Destino</th>
+                            <th>Kilometraje Inicial</th>
+                            <th>Kilometraje Final</th>
+                            <th>Tipo de Entrega</th>
+                            <th>Estado</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos de las entregas se llenarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+
+
+            <script>
+                document.getElementById('btnAbrirModal').addEventListener('click', function () {
+                    document.getElementById('registrarEntrega').showModal();
+                });
+
+                document.getElementById('btnCancelarEntrega').addEventListener('click', function () {
+                    document.getElementById('registrarEntrega').close();
+                });
+            </script>
+        </section>
+        <section id="consumos">
+            <dialog id="registrarConsumo" class="modal">
+                <form id="formConsumo">
+                    <input type="hidden" id="id_consumo">
+
+                    <label for="id_unidad_consumo">Id Unidad:</label>
+                    <input type="text" id="id_unidad_consumo" name="id_unidad_consumo" readonly>
+
+                    <label for="placa_consumo">Placa:</label>
+                    <input type="text" id="placa_consumo" name="placa_consumo" readonly>
+
+                    <label for="id_conductor_consumo">Id Conductor:</label>
+                    <input type="text" id="id_conductor_consumo" name="id_conductor_consumo" readonly>
+
+                    <label for="nombre_conductor_consumo">Nombre del Conductor:</label>
+                    <input type="text" id="nombre_conductor_consumo" name="nombre_conductor_consumo" readonly>
+
+                    <label for="fecha_consumo">Fecha de Consumo:</label>
+                    <input type="datetime-local" id="fecha_consumo" name="fecha_consumo" required>
+
+                    <label for="kilometraje_anterior">kilometraje Anterior:</label>
+                    <input type="number" id="kilometraje_anterior" name="kilometraje_anterior" readonly>
+
+                    <label for="kilometraje_actual">Kilometraje Actual:</label>
+                    <input type="number" id="kilometraje_actual" name="kilometraje_actual" required>
+
+                    <label for="litros_cargados">Litros Cargados:</label>
+                    <input type="text" id="litros_cargados" name="litros_cargados" required>
+
+                    <label for="precio_por_litro">Precio por Litro:</label>
+                    <input type="text" id="precio_por_litro" name="precio_por_litro" required>
+
+                    <button type="submit">Guardar Consumo</button>
+                    <button type="button" id="btnCancelarConsumo" class="cancelar consumo">Cancelar</button>
+                </form>
+            </dialog>
+
+            <button id="btnAbrirModalConsumo">Registrar Nuevo Consumo</button>
+            <script>
+                document.getElementById('btnAbrirModalConsumo').addEventListener('click', function () {
+                    document.getElementById('registrarConsumo').showModal();
+                });
+
+                document.getElementById('btnCancelarConsumo').addEventListener('click', function () {
+                    document.getElementById('registrarConsumo').close();
+                });
+            </script>
+
+            <h2>Consumos</h2>
+            <div class="table-container">
+                <table id="tablaConsumos">
+                    <thead>
+                        <tr>
+                            <!-- <th>ID Consumo</th> -->
+                            <th>ID Unidad</th>
+                            <th>Placa</th>
+                            <!-- <th>ID Conductor</th> -->
+                            <th>Nombre Conductor</th>
+                            <th>Fecha y hora de Consumo</th>
+                            <th>Kilometraje Anterior</th>
+                            <th>Kilometraje</th>
+                            <th>Litros Cargados</th>
+                            <th>Precio por Litro</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos de los consumos se llenarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <section id="incidentes">
+
+            <dialog id="registrarIncidente" class="modal">
+                <form id="formIncidente">
+                    <input type="hidden" id="id_incidente">
+
+                    <label for="id_unidad_incidente">Id Unidad:</label>
+                    <input type="text" id="id_unidad_incidente" name="id_unidad_incidente" readonly>
+
+                    <label for="placa_incidente">Placa:</label>
+                    <input type="text" id="placa_incidente" name="placa_incidente" readonly>
+
+                    <label for="id_conductor_incidente">Id Conductor:</label>
+                    <input type="text" id="id_conductor_incidente" name="id_conductor_incidente" readonly>
+
+                    <label for="nombre_conductor_incidente">Nombre del Conductor:</label>
+                    <input type="text" id="nombre_conductor_incidente" name="nombre_conductor_incidente" readonly>
+
+                    <label for="fecha_incidente">Fecha del Incidente:</label>
+                    <input type="datetime-local" id="fecha_incidente" name="fecha_incidente" required>
+
+                    <label for="descripcion">Descripción del Incidente:</label>
+                    <textarea id="descripcion" name="descripcion" required></textarea>
+
+                    <label for="tipo_incidente">Tipo de Incidente:</label>
+                    <select name="tipo_incidente" id="tipo_incidente"></select>
+
+                    <label for="lugar">Lugar del Incidente:</label>
+                    <input type="text" id="lugar" name="lugar" required>
+
+                    <button type="submit">Guardar Incidente</button>
+                    <button type="button" id="btnCancelarIncidente" class="cancelar incidente">Cancelar</button>
+                </form>
+            </dialog>
+            <button id="btnAbrirModalIncidente">Registrar Nuevo Incidente</button>
+
+            <script>
+                document.getElementById('btnAbrirModalIncidente').addEventListener('click', function () {
+                    document.getElementById('registrarIncidente').showModal();
+                });
+
+                document.getElementById('btnCancelarIncidente').addEventListener('click', function () {
+                    document.getElementById('registrarIncidente').close();
+                });
+            </script>
+
+            <h2>Incidentes</h2>
+            <div class="table-container">
+                <table id="tablaIncidentesDetalle">
+                    <thead>
+                        <tr>
+                            <!-- <th>ID Incidente</th> -->
+                            <th>ID Unidad</th>
+                            <th>Placa</th>
+                            <!-- <th>ID Conductor</th> -->
+                            <th>Nombre Conductor</th>
+                            <th>Fecha del Incidente</th>
+                            <th>Descripción</th>
+                            <th>Tipo de Incidente</th>
+                            <th>Lugar</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos de los incidentes se llenarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

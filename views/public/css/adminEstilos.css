@@ -274,7 +274,7 @@ button[type='reset'] {
     border: 2px solid black;
 }
 
-.eliminar, .btnCancelar {
+.eliminar, .btnCancelar, .finalizar {
     background-color: var(--colorRojo);
 
     box-shadow: var(--sombra);
@@ -302,6 +302,8 @@ button:hover {
     height: 50%;
     overflow: auto;
     scrollbar-width: thin;
+    scrollbar-color: var(--colorWhite) var(--colorAmarillo);
+    scroll-behavior: smooth;
 
     box-shadow: var(--sombra);
     border: 2px solid black;

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina administrado</title>
+    <title>ADMINISTRADOR VIEW</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="public/css/adminEstilos.css">
 </head>
@@ -314,7 +314,7 @@
                 <select id="id_unidad_asignacion" required></select>
 
                 <label for="fecha_inicio">Fecha de Inicio:</label>
-                <input type="datetime-local" id="fecha_inicio" required>
+                <input type="date" id="fecha_inicio" required>
 
                 <button type="submit">Asignar Unidad</button>
                 <button type="reset" class="btnCancelar">Cancelar</button>
@@ -454,7 +454,6 @@
 
             <!-- Tabla de Inventarios -->
             <div class="table-container">
-                <h3>Lista de Productos</h3>
                 <table id="tablaInventario">
                     <thead>
                         <tr>
