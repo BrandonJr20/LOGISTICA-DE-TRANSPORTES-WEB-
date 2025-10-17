@@ -31,7 +31,7 @@ async function obtenerMovimientos() {
             <td>${movimiento.nombre_insumo}</td>
             <td>${movimiento.tipo_movimiento}</td>
             <td>${movimiento.cantidad}</td>
-            <td>${movimiento.fecha}</td>
+            <td>${formatearFechaDate(movimiento.fecha)}</td>
             <td>${movimiento.descripcion}</td>
             <td>${movimiento.responsable}</td>
         `
@@ -65,7 +65,6 @@ async function agregarMovimiento(e) {
         responsable: document.getElementById('responsable_movimiento').value.trim()
     };
 
-    console.log(data);
 
     // // Validar stock en salidas
     // if (data.tipo_movimiento === 'Salida') {
@@ -77,30 +76,34 @@ async function agregarMovimiento(e) {
     // }
 
     // Determinar la URL según el tipo de movimiento 
-    let url;
-    const tipoMovimiento = document.getElementById('tipo_movimiento').value
-    console.log(tipoMovimiento)
-    if (tipoMovimiento === 'SALIDA') {
-        url = 'http://localhost:3000/movimientos/salidas'
-    } else {
-        url = 'http://localhost:3000/movimientos/entradas'
-    };
 
-    console.log('URL de la solicitud:', url);
+    if (await mostrarDialogoConfirmacion('¿Está seguro de registrar este movimiento?')) {
+        await mostrarDialogo('Movimiento registrado con éxito');
+        let url;
+        const tipoMovimiento = document.getElementById('tipo_movimiento').value
+        console.log(tipoMovimiento)
+        if (tipoMovimiento === 'SALIDA') {
+            url = 'http://localhost:3000/movimientos/salidas'
+        } else {
+            url = 'http://localhost:3000/movimientos/entradas'
+        };
 
-    const res = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
-    const result = await res.json();
-    alert(result.msg);
-    if (result.success) {
-        document.getElementById('formMovimientoInventario').reset();
-        document.getElementById('responsable_movimiento').value = responsable
-        obtenerMovimientos();
-        cargarProductos();
+        console.log('URL de la solicitud:', url);
+
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        if (result.success) {
+            document.getElementById('formMovimientoInventario').reset();
+            document.getElementById('responsable_movimiento').value = responsable
+            obtenerMovimientos();
+            cargarProductos();
+            alertasStockBajo()
+        }
     }
 }

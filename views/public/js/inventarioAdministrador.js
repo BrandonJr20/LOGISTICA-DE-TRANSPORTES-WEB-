@@ -22,8 +22,10 @@ async function obtenerInventario() {
                 <td>${item.descripion}</td>
                 <td>${item.stock_actual}</td>
                 <td>${item.stock_minimo}</td>
+                <td>${item.costo !== null ? `Q${parseFloat(item.costo).toFixed(2)}` : '—'}</td>
+                <td>${item.costo !== null ? `Q${parseFloat(item.costo).toFixed(2)}` : '—'}</td>
                 <td>${item.proveedor}</td>
-                <td>${item.estado}</td>
+                <td>${item.estado ? 'Activo' : 'Inactivo'}</td>
             `
         tbody.appendChild(row)
     })
@@ -72,27 +74,33 @@ async function alertasStockBajo() {
 
 async function agregarProducto(e) {
     e.preventDefault()
-    
+
     const data = {
         nombre_insumo: document.getElementById('nombre_insumo').value,
         tipo: parseInt(document.getElementById('tipo_producto').value),
         descripcion: document.getElementById('descripcion_producto').value,
         stock_actual: parseInt(document.getElementById('stock_actual').value),
         stock_minimo: parseInt(document.getElementById('stock_minimo').value),
-        proveedor: document.getElementById('proveedor').value
+        proveedor: document.getElementById('proveedor').value,
+        costo: parseFloat(document.getElementById('costo').value)
     }
-    console.log(data)
 
-    const res = await fetch('http://localhost:3000/inventario/producto', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    })
+    if (await mostrarDialogoConfirmacion('¿Estás seguro de agregar este producto?')) {
+        await mostrarDialogo('Producto agregado')
+        const res = await fetch('http://localhost:3000/inventario/producto', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+    } else {
+        await mostrarDialogo('Producto no agregado')
+    }
+
     const result = await res.json()
-    alert(result.msg)
     if (result.success) {
         document.getElementById('formInventarios').reset()
         obtenerInventario()
+        obtenerMantenimientosActivos()
         alertasStockBajo()
     }
 }

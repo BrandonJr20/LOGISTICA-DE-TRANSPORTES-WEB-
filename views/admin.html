@@ -270,7 +270,7 @@
                 <!-- Solo visible al editar -->
                 <label for="estado">Estado:</label>
                 <select id="estado_vehiculo">
-                    <option value="Operativo">Operativo</option>
+                    <option value="operativo">Operativo</option>
                     <option value="en_mantenimiento">En mantenimiento</option>
                     <option value="fuera_servicio">De baja</option>
                 </select>
@@ -393,7 +393,7 @@
                         </select>
 
                         <label for="costo">Costo:</label>
-                        <input type="number" id="costo" name="costo" step="0.01" required>
+                        <input type="number" id="costo_reparacion" name="costo" step="0.01" readonly>
 
                         <button type="submit">Finalizar</button>
                         <button type="reset" class="btnCancelar">Cancelar</button>
@@ -445,6 +445,9 @@
                 <label for="stock_minimo">Stock Mínimo:</label>
                 <input type="number" id="stock_minimo" name="stock_minimo" required min="0">
 
+                <label for="costo">Costo:</label>
+                <input type="number" id="costo" name="costo" step="0.01" required>
+
                 <label for="proveedor">Proveedor:</label>
                 <input type="text" id="proveedor" name="proveedor" required>
 
@@ -463,6 +466,8 @@
                             <th>Descripción</th>
                             <th>Stock Actual</th>
                             <th>Stock Mínimo</th>
+                            <th>Costo unitario</th>
+                            <th>Costo Total</th>
                             <th>Proveedor</th>
                             <th>Estado</th>
                         </tr>
@@ -530,7 +535,7 @@
             <form id="formAsignarInsumos">
 
                 <label for="id_mantenimiento_insumo">Mantenimiento Activo:</label>
-                <select id="id_mantenimiento_insumo" name="id_mantenimiento" required>
+                <select id="id_mantenimiento_insumo" name="id_mantenimiento">
                     <option value="">Seleccione</option>
                 </select>
 

@@ -45,8 +45,8 @@ class InventarioController {
 
     async agregarProducto(req, res){
         try {
-            const {nombre_insumo, tipo, descripcion, stock_actual, stock_minimo, proveedor} = req.body
-            const resultado = await InventarioModel.agregarProducto({nombre_insumo, tipo, descripcion, stock_actual, stock_minimo, proveedor})
+            const {nombre_insumo, tipo, descripcion, stock_actual, stock_minimo, proveedor, costo} = req.body
+            const resultado = await InventarioModel.agregarProducto({nombre_insumo, tipo, descripcion, stock_actual, stock_minimo, proveedor, costo})
             res.status(201).json({
                 success:true,
                 msg: 'Producto agregado correctamente',
@@ -60,8 +60,8 @@ class InventarioController {
 
     async actualizarProducto(req, res){
         try{
-            const {id_insumo, nombre, tipo, descripcion, stock_actual, stock_minimo, proveedor, estado} = req.body
-            const resultado = await InventarioModel.actualizarProducto({id_insumo, nombre, tipo, descripcion, stock_actual, stock_minimo, proveedor, estado})
+            const {id_insumo, nombre, tipo, descripcion, stock_actual, stock_minimo, proveedor, estado, costo} = req.body
+            const resultado = await InventarioModel.actualizarProducto({id_insumo, nombre, tipo, descripcion, stock_actual, stock_minimo, proveedor, estado, costo})
             if(resultado > 0){
                 res.status(201).json({
                     success: true,

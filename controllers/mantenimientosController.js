@@ -46,9 +46,9 @@ class MantenimientoController {
 
     async finalizarMantenimiento(req, res) {
         try {
-            const { id_unidad, costo } = req.body;
+            const { id_unidad } = req.body;
 
-            if (!id_unidad || costo === undefined) {
+            if (!id_unidad) {
                 return res.status(400).json({
                     success: false,
                     msg: 'Faltan campos obligatorios: id_unidad o costo'
@@ -56,8 +56,7 @@ class MantenimientoController {
             }
 
             const resultado = await MantenimientoModel.finalizarMantenimiento({
-                id_unidad,
-                costo: parseFloat(costo) || 0.00
+                id_unidad
             });
 
             if (!resultado.success) {

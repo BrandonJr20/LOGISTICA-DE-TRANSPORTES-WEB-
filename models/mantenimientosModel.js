@@ -25,11 +25,10 @@ const MantenimientoModel = {
         }
     },
 
-    async finalizarMantenimiento({ id_unidad, costo }) {
+    async finalizarMantenimiento({ id_unidad }) {
         try {
             const request = new db.sql.Request();
             request.input('id_unidad', db.sql.Int, id_unidad);
-            request.input('costo', db.sql.Decimal(10, 2), costo);
 
             const result = await request.execute('sp_FinalizarMantenimiento');
 

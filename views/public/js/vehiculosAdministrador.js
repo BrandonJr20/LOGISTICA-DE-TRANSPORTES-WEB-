@@ -81,11 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     </td>`
                 tabla.appendChild(tr)
             })
-
             agregarEventosAcciones();
         } catch (err) {
             await mostrarDialogo('Error al obtener vehículos', err);
-            console.error('Error al obtener vehículos:', err)
         }
     }
 
@@ -102,6 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('marca').value = vehiculo.marca;
                     document.getElementById('modelo').value = vehiculo.modelo;
                     document.getElementById('anio').value = vehiculo.anio;
+
+                    const campoKilometraje = document.getElementById('kilometraje');
+                    campoKilometraje.readOnly = true; // Hacer el campo no editable
+                    campoKilometraje.style.backgroundColor = '#eff5fcff'; // Cambiar el color de fondo para indicar que no es editable    
                     document.getElementById('kilometraje').value = vehiculo.kilometraje;
                     document.getElementById('fecha_adquisicion').value = formatearFechaDate(vehiculo.fecha_adquisicion);
                     document.getElementById('tipoUnidad').value = vehiculo.tipoUnidad;
@@ -123,10 +125,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         obtenerVehiculos();
                     } catch (err) {
                         await mostrarDialogo('Error al eliminar vehículo', err);
-                        console.error('Error al eliminar vehículo:', err);
                     }
                 }
             });
         });
     }
-});             
+});

@@ -37,7 +37,7 @@ const VehiculoModel = {
         return result.recordset;
     },
 
-    async actualizar({ id, placa, marca, modelo, anio, estado, kilometraje, fecha_adquisicion, tipoUnidad }) {
+    async actualizar({ id, placa, marca, modelo, anio, estado, /*kilometraje,*/ fecha_adquisicion, tipoUnidad }) {
         const request = new db.sql.Request();
         request.input('id_unidad', db.sql.Int, id)
         request.input('placa', db.sql.VarChar(20), placa);
@@ -45,7 +45,7 @@ const VehiculoModel = {
         request.input('modelo', db.sql.VarChar(50), modelo);
         request.input('anio', db.sql.Int, anio);
         request.input('estado', db.sql.VarChar(30), estado);
-        request.input('kilometraje', db.sql.Int, kilometraje);
+        // request.input('kilometraje', db.sql.Int, kilometraje);
         request.input('fecha_adquisicion', db.sql.Date, fecha_adquisicion);
         request.input('tipoUnidad', db.sql.Char(1), tipoUnidad);
         const result = await request.execute('sp_ActualizarUnidad');

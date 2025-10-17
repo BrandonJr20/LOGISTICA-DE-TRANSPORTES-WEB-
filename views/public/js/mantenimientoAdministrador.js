@@ -15,6 +15,15 @@ async function obtenerUnidades() {
   unidades.forEach(unidad => {
     selectAsignar.innerHTML += `<option value="${unidad.id_unidad}">${unidad.placa}</option>`;
   });
+  campoKilometraje = document.getElementById('kilometraje_mantenimiento');
+  selectAsignar.addEventListener('change', () => {
+    const unidadSeleccionada = unidades.find(u => u.id_unidad == selectAsignar.value);
+    if (unidadSeleccionada) {
+      campoKilometraje.value = unidadSeleccionada.kilometraje || '';
+      campoKilometraje.readOnly = true; // Hacer el campo no editable
+      campoKilometraje.style.backgroundColor = '#eff5fcff'; // Cambiar el color de fondo
+    }
+  });
 
   const activosRes = await fetch('http://localhost:3000/mantenimientos/activos/');
   const activos = await activosRes.json();
@@ -23,6 +32,15 @@ async function obtenerUnidades() {
     selectFinalizar.innerHTML = '<option value="">Seleccione</option>';
     activos.forEach(unidad => {
       selectFinalizar.innerHTML += `<option value="${unidad.id_unidad}">${unidad.placa}</option>`;
+    });
+    campoCosto = document.getElementById('costo_reparacion');
+    selectFinalizar.addEventListener('change', () => {
+      const unidadSeleccionada = activos.find(u => u.id_unidad == selectFinalizar.value);
+      if (unidadSeleccionada) {
+        campoCosto.value = unidadSeleccionada.costo || '';
+        campoCosto.readOnly = true; // Hacer el campo no editable
+        campoCosto.style.backgroundColor = '#eff5fcff'; // Cambiar el color de fondo
+      }
     });
   } else {
     selectFinalizar.innerHTML += `<option value="">No hay unidades en mantenimiento</option>`;
@@ -65,6 +83,7 @@ async function asignarMantenimiento(e) {
   const result = await res.json();
   if (result.success) {
     document.getElementById('formAsignarMantenimiento').reset();
+    obtenerMantenimientosActivos()
     obtenerHistorialMantenimiento();
     obtenerUnidades();
   }
@@ -93,12 +112,14 @@ async function finalizarMantenimiento(e) {
   const result = await res.json();
   if (result.success) {
     document.getElementById('formFinalizarMantenimiento').reset();
-    
+
     const selectFinalizar = document.getElementById('id_unidad_finalizar');
     const optionToRemove = selectFinalizar.querySelector(`option[value="${data.id_unidad}"]`);
     if (optionToRemove) optionToRemove.remove();
+    obtenerMantenimientosActivos()
     obtenerHistorialMantenimiento();
     obtenerUnidades();
+    obtenerHistorial()
   }
 }
 

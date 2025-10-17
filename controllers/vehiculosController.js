@@ -74,7 +74,7 @@ class VehiculosController {
     async actualizar(req, res) {
         try {
             const { id } = req.params;
-            const { placa, marca, modelo, anio, estado, kilometraje, fecha_adquisicion, tipoUnidad } = req.body;
+            const { placa, marca, modelo, anio, estado, /*kilometraje,*/ fecha_adquisicion, tipoUnidad } = req.body;
 
             console.log(id);
             console.log(req.body);
@@ -88,7 +88,7 @@ class VehiculosController {
                 typeof modelo !== 'string' ||
                 typeof anio !== 'number' ||
                 typeof estado !== 'string' ||
-                typeof kilometraje !== 'number' ||
+                // typeof kilometraje !== 'number' ||
                 typeof fecha_adquisicion !== 'string' ||
                 typeof tipoUnidad !== 'string'
             ) {
@@ -102,7 +102,7 @@ class VehiculosController {
                 modelo,
                 anio,
                 estado,
-                kilometraje,
+                // kilometraje,
                 fecha_adquisicion,
                 tipoUnidad
             });

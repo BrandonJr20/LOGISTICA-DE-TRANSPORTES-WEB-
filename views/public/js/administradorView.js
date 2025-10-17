@@ -271,6 +271,10 @@ document.addEventListener('DOMContentLoaded', function () {
         ) {
             e.preventDefault(); // evita comportamiento por defecto para controlar todo
 
+            const campoKilometraje = document.getElementById('kilometraje')
+            campoKilometraje.readOnly = false; // Hacer el campo editable
+            campoKilometraje.style.backgroundColor = ''; // Restaurar el color de fondo original
+
             document.querySelectorAll('form').forEach(form => {
                 form.reset();
                 form.querySelectorAll('input[type="hidden"]').forEach(h => h.value = '');
