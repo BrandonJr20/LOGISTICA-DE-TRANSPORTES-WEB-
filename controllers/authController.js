@@ -47,6 +47,7 @@ async function loginUsuario(req, res) {
     // 3. Generar token
     const token = jwt.sign(
       {
+        foto_perfil: usuario.foto_perfil,
         id: usuario.id,
         nombre_usuario: usuario.nombre_usuario,
         correo: usuario.correo,
@@ -61,11 +62,12 @@ async function loginUsuario(req, res) {
       mensaje: 'Login exitoso',
       token,
       usuario: {
+        foto_perfil: usuario.foto_perfil,
         id: usuario.id,
         nombre_usuario: usuario.nombre_usuario,
         correo: usuario.correo,
         rol: usuario.rol,
-        estado: usuario.estado
+        estado: usuario.estado,
       }
     });
 

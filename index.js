@@ -18,6 +18,9 @@ const inventarioRoutes = require('./routes/inventarioRoutes')
 const movimientoRoutes = require('./routes/movimientoRoutes') 
 const insumoMantenimientoRoutes = require('./routes/insumoMantRoutes')
 const authRoutes = require('./routes/authRoutes');
+const informacionRoutes = require('./routes/informacionRoutes');
+const entregaRoutes = require('./routes/entregasRoutes')
+const consumosRoutes = require('./routes/consumosRoutes')
 
 // Middleware
 app.use(express.json());
@@ -41,6 +44,9 @@ app.use('/inventario', inventarioRoutes);
 app.use('/movimientos', movimientoRoutes);
 app.use('/insumoMantenimiento', insumoMantenimientoRoutes)
 app.use('/login', authRoutes);
+app.use('/informacion', informacionRoutes);
+app.use('/entregas', entregaRoutes)
+app.use('/consumos', consumosRoutes)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

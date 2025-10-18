@@ -5,12 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CONDUCTOR VIEW</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="/views/public/css/conductorEstilos.css">
 </head>
 
 <body>
-
-    <img alt="vehiculo_asignado" id="vehiculo_asignado">
 
     <button class="menu-toggle" id="menuToggle">
         <i class="fas fa-bars"></i>
@@ -20,7 +19,7 @@
         <nav>
 
             <div class="perfil">
-                <img src="" alt="imagenquemada" width="100px" height="100px">
+                <img src="public/images/fondo.png" alt="imagenquemada" width="100px" height="100px">
                 <h3>Nombre Conductor</h3>
             </div>
 
@@ -36,111 +35,138 @@
 
     <main>
 
-        <section id="principal">
-
-            <a href="#informacion-personal" id="personal">
+        <section id="principal" class="principal">
+            <a href="#informacion-personal">
                 <cards>
                     <i class="fas fa-user"></i>
                     <h3>Informacion Personal</h3>
                 </cards>
-            </a><a href="#entregas" id="entregas">
+            </a>
+            <a href="#entregas">
                 <cards>
                     <i class="fas fa-box"></i>
                     <h3>Entregas</h3>
                 </cards>
-            </a><a href="#consumos" id="consumos">
+            </a>
+            <a href="#consumos">
                 <cards>
                     <i class="fas fa-gas-pump"></i>
                     <h3>Consumos</h3>
                 </cards>
-            </a><a href="#incidentes" id="incidentes">
+            </a>
+            <a href="#incidentes">
                 <cards>
                     <i class="fas fa-exclamation-triangle"></i>
                     <h3>Incidentes</h3>
                 </cards>
             </a>
+            <a href="#cerrarSesion">
+                <cards>
+                    <i class="fas fa-sign-out-alt"></i>
+                    <h3>Cerrar Sesión</h3>
+                </cards>
+            </a>
 
         </section>
+
         <section id="informacion-personal">
             <h2>Información Personal</h2>
             <form id="formUsuario">
                 <input type="hidden" id="id_usuario">
 
-                <h3>Informacion de inicio de sesion</h3>
-                <label for="imagenPerfil">Foto de perfil</label>
-                <img id="imagenPerfil"  src="" alt="Imagen de Perfil" width="100px" height="100px">
-                <input type="file" id="imagen_perfil" name="imagen_perfil">
+                <div>
+                    <label for="nombre_usuario">Nombre de Usuario:</label>
+                    <input type="text" id="nombre_usuario" name="nombre_usuario" required>
+                </div>
 
-                <label for="nombre_usuario">Nombre de Usuario:</label>
-                <input type="text" id="nombre_usuario" name="nombre_usuario" required>
+                <div>
+                    <label for="correo">Correo Electrónico:</label>
+                    <input type="email" id="correo" name="correo" required>
+                </div>
 
-                <label for="correo">Correo Electrónico:</label>
-                <input type="email" id="correo" name="correo" required>
+                <div>
+                    <label for="contrasena">Contraseña:</label>
+                    <input type="text" id="contrasena" name="contrasena" required
+                        placeholder="Ingrese de nuevo o cambie">
+                </div>
 
-                <label for="contrasena">Contraseña:</label>
-                <input type="text" id="contrasena" name="contrasena" required>
-
-                <h3>Información Personal</h3>
-                <label for="nombre_completo">Nombre completo:</label>
-                <input type="text" id="nombre_completo" name="nombre_completo" required>
-                <label for="dui"></label>DUI:</label>
-                <input type="text" id="dui" name="dui" required>
-                <label for="licencia">Licencia:</label>
-                <input type="text" id="licencia" name="licencia" required>
-                <label for="telefono">Teléfono:</label>
-                <input type="text" id="telefono" name="telefono" required>
-                <label for="direccion">Dirección:</label>
-                <input type="text" id="direccion" name="direccion" required>
-
-                <button type="submit">Guardar Usuario</button>
-                <button type="button" id="btnEditar" class="editar usuario">Editar Usuario</button>
-                <button type="reset" class="cancelar usuario">Cancelar</button>
+                <div>
+                    <label for="nombre_completo">Nombre completo:</label>
+                    <input type="text" id="nombre_completo" name="nombre_completo" required>
+                </div>
+                <div>
+                    <label for="dui">DUI:</label>
+                    <input type="text" id="dui" name="dui" required>
+                </div>
+                <div>
+                    <label for="licencia">Licencia:</label>
+                    <input type="text" id="licencia" name="licencia" required>
+                </div>
+                <div>
+                    <label for="telefono">Teléfono:</label>
+                    <input type="number" id="telefono" name="telefono" required>
+                </div>
+                <div>
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" id="direccion" name="direccion" required>
+                </div>
+                <div class="botones">
+                    <button type="submit">Guardar Usuario</button>
+                    <button type="button" id="btnEditar" class="editar usuario">Editar Usuario</button>
+                    <button type="reset" id="btnCancelar" class="cancelar usuario">Cancelar</button>
+                </div>
             </form>
 
             <h2>Historico</h2>
             <div class="table-container">
-                <h3>Viajes Realizados</h3>
-                <table id="tablaUsuarios">
-                    <thead>
-                        <tr>
-                            <th>ID Viaje</th>
-                            <th>Fecha</th>
-                            <th>Destino</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Los datos de los viajes se llenarán aquí dinámicamente -->
-                    </tbody>
-                </table>
-                <h3></h3>Unidad Asignada</h3>
-                <table id="tablaUnidades">
-                    <thead>
-                        <tr>
-                            <th>ID Unidad</th>
-                            <th>Modelo</th>
-                            <th>Placa</th>
-                            <th>Año</th>
-                            <th>Consumo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Los datos de las unidades se llenarán aquí dinámicamente -->
-                    </tbody>
-                </table>
-                <h3>Total de incidentes</h3>
-                <table id="tablaIncidentes">
-                    <thead>
-                        <tr>
-                            <th>id_unidad</th>
-                            <th>placa</th>
-                            <th>cantidad</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Los datos de los incidentes se llenarán aquí dinámicamente -->
-                    </tbody>
-                </table>
+                <div>
+                    <h3>Unidad Asignada</h3>
+                    <table id="tablaUnidades">
+                        <thead>
+                            <tr>
+                                <th>ID Unidad</th>
+                                <th>Modelo</th>
+                                <th>Placa</th>
+                                <th>Año</th>
+                                <th>Consumo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los datos de las unidades se llenarán aquí dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <h3>Viajes Realizados</h3>
+                    <table id="tablaUsuarios">
+                        <thead>
+                            <tr>
+                                <th>ID Viaje</th>
+                                <th>Fecha</th>
+                                <th>Destino</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los datos de los viajes se llenarán aquí dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <h3>Total de incidentes</h3>
+                    <table id="tablaIncidentes">
+                        <thead>
+                            <tr>
+                                <th>id_unidad</th>
+                                <th>placa</th>
+                                <th>cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los datos de los incidentes se llenarán aquí dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
@@ -154,9 +180,6 @@
 
                     <label for="placa">Placa:</label>
                     <input type="text" id="placa" name="placa" readonly>
-
-                    <label for="id_conductor">Id Conductor:</label>
-                    <input type="text" id="id_conductor" name="id_conductor" readonly>
 
                     <label for="nombre_conductor">Nombre del Conductor:</label>
                     <input type="text" id="nombre_conductor" name="nombre_conductor" readonly>
@@ -180,10 +203,10 @@
                     <button type="button" id="btnCancelarEntrega" class="cancelar entrega">Cancelar</button>
                 </form>
             </dialog>
-            <button id="btnAbrirModal">Registrar Nueva Entrega</button>
-            
+            <button id="modalEntrega" class="btnAbrirModal" data-tipo="entrega">Registrar Nueva Entrega</button>
+
             <h2>Entregas</h2>
-            <div class="table-container">   
+            <div class="table-container">
                 <table id="tablaEntregas">
                     <thead>
                         <tr>
@@ -207,18 +230,8 @@
                         <!-- Los datos de las entregas se llenarán aquí dinámicamente -->
                     </tbody>
                 </table>
-
-
-            <script>
-                document.getElementById('btnAbrirModal').addEventListener('click', function () {
-                    document.getElementById('registrarEntrega').showModal();
-                });
-
-                document.getElementById('btnCancelarEntrega').addEventListener('click', function () {
-                    document.getElementById('registrarEntrega').close();
-                });
-            </script>
         </section>
+
         <section id="consumos">
             <dialog id="registrarConsumo" class="modal">
                 <form id="formConsumo">
@@ -227,11 +240,9 @@
                     <label for="id_unidad_consumo">Id Unidad:</label>
                     <input type="text" id="id_unidad_consumo" name="id_unidad_consumo" readonly>
 
+                    <input type="text" id="id_conductor">
                     <label for="placa_consumo">Placa:</label>
                     <input type="text" id="placa_consumo" name="placa_consumo" readonly>
-
-                    <label for="id_conductor_consumo">Id Conductor:</label>
-                    <input type="text" id="id_conductor_consumo" name="id_conductor_consumo" readonly>
 
                     <label for="nombre_conductor_consumo">Nombre del Conductor:</label>
                     <input type="text" id="nombre_conductor_consumo" name="nombre_conductor_consumo" readonly>
@@ -245,27 +256,27 @@
                     <label for="kilometraje_actual">Kilometraje Actual:</label>
                     <input type="number" id="kilometraje_actual" name="kilometraje_actual" required>
 
+                    <label for="tipo_combustible">Tipo combustible:</label>
+                    <select name="tipo_combustible" id="tipo_combustible"></select>
+
                     <label for="litros_cargados">Litros Cargados:</label>
                     <input type="text" id="litros_cargados" name="litros_cargados" required>
 
-                    <label for="precio_por_litro">Precio por Litro:</label>
-                    <input type="text" id="precio_por_litro" name="precio_por_litro" required>
+                    <label for="costo_total">Precio total:</label>
+                    <input type="text" id="costo_total" name="costo_total" required>
+
+                    <label for="nombre_estacion">nombre_estacion</label>
+                    <input type="text" id="nombre_estacion">
+
+                    <label for="direccion_estacion">Dirección estacion</label>
+                    <input type="text" id="direccion_estacion">
 
                     <button type="submit">Guardar Consumo</button>
                     <button type="button" id="btnCancelarConsumo" class="cancelar consumo">Cancelar</button>
                 </form>
             </dialog>
 
-            <button id="btnAbrirModalConsumo">Registrar Nuevo Consumo</button>
-            <script>
-                document.getElementById('btnAbrirModalConsumo').addEventListener('click', function () {
-                    document.getElementById('registrarConsumo').showModal();
-                });
-
-                document.getElementById('btnCancelarConsumo').addEventListener('click', function () {
-                    document.getElementById('registrarConsumo').close();
-                });
-            </script>
+            <button id="modalConsumo" class="btnAbrirModal" data-tipo="consumo">Registrar Nuevo Consumo</button>
 
             <h2>Consumos</h2>
             <div class="table-container">
@@ -280,9 +291,10 @@
                             <th>Fecha y hora de Consumo</th>
                             <th>Kilometraje Anterior</th>
                             <th>Kilometraje</th>
-                            <th>Litros Cargados</th>
-                            <th>Precio por Litro</th>
-                            <th>Opciones</th>
+                            <th>Galones Cargados</th>
+                            <th>Precio por Galon</th>
+                            <th>Tipo combustible</th>
+                            <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -291,6 +303,7 @@
                 </table>
             </div>
         </section>
+
         <section id="incidentes">
 
             <dialog id="registrarIncidente" class="modal">
@@ -325,17 +338,7 @@
                     <button type="button" id="btnCancelarIncidente" class="cancelar incidente">Cancelar</button>
                 </form>
             </dialog>
-            <button id="btnAbrirModalIncidente">Registrar Nuevo Incidente</button>
-
-            <script>
-                document.getElementById('btnAbrirModalIncidente').addEventListener('click', function () {
-                    document.getElementById('registrarIncidente').showModal();
-                });
-
-                document.getElementById('btnCancelarIncidente').addEventListener('click', function () {
-                    document.getElementById('registrarIncidente').close();
-                });
-            </script>
+            <button id="modalIncidente" class="btnAbrirModal" data-tipo="incidente">Registrar Nuevo Incidente</button>
 
             <h2>Incidentes</h2>
             <div class="table-container">
@@ -361,7 +364,56 @@
             </div>
         </section>
 
+        <dialog class="alertas" id="dialogo-alerta">
+            <div class="contenido-alerta">
+                <span class="cerrar-alerta">&times;</span>
+                <p id="mensaje-alerta"></p>
+                <div class="acciones-alerta">
+                    <input type="text" id="inputDialogo" style="display: none;">
+                    <div>
+                        <button id="btnCancelarDialogo" class="btnCancelar">Cancelar</button>
+                        <button id="btnAceptarDialogo" class="btnAceptar">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+
     </main>
 
+    <script>
+
+        function abrirModal(idModal) {
+            document.getElementById(idModal).showModal();
+        }
+
+        // Función para cerrar modal
+        function cerrarModal(idModal) {
+            document.getElementById(idModal).close();
+        }
+
+        // Botones que abren modales
+        document.querySelectorAll('.btnAbrirModal').forEach(boton => {
+            boton.addEventListener('click', () => {
+                const tipo = boton.dataset.tipo; // asumimos que pones data-tipo="entrega" / "consumo" / "incidente"
+                abrirModal(`registrar${tipo.charAt(0).toUpperCase() + tipo.slice(1)}`);
+            });
+        });
+
+        // Botones que cierran modales
+        document.getElementById('btnCancelarEntrega').addEventListener('click', () => cerrarModal('registrarEntrega'));
+        document.getElementById('btnCancelarConsumo').addEventListener('click', () => cerrarModal('registrarConsumo'));
+        document.getElementById('btnCancelarIncidente').addEventListener('click', () => cerrarModal('registrarIncidente'));
+
+    </script>
+
+    <script src="public/js/informacion.js"></script>
+    <script src="public/js/conductorView.js"></script>
+    <script src="public/js/entregas.js"></script>
+    <script src="public/js/consumos.js"></script>
+    <script src="public/js/dialogos.js"></script>
+    <script src="public/js/formatearFecha.js"></script>
+    <script src="public/js/incidentes.js"></script>
+
 </body>
+
 </html>

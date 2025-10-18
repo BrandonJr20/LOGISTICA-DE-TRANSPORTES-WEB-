@@ -18,14 +18,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
 
         if (!token || !usuario.rol) {
-            alert('Sesión expirada. Por favor, inicia sesión nuevamente.');
+            mostrarDialogo('Sesión expirada. Por favor, inicia sesión nuevamente.');
             window.location.href = '../';
             return false;
         }
 
         // Verificar que sea admin (opcional, según tu lógica)
-        if (usuario.rol !== 'admin') {
-            alert('No tienes permisos para acceder a esta página.');
+        if (usuario.rol !== 'conductor') {
+            mostrarDialogo('No tienes permisos para acceder a esta página.');
             window.location.href = '../';
             return false;
         }
@@ -39,14 +39,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Buscar elementos donde mostrar la info del usuario
         const perfilNombre = document.querySelector('.perfil h3');
-        const perfilEmail = document.querySelector('.perfil p');
 
         if (perfilNombre) {
             perfilNombre.textContent = usuario.nombre_usuario || 'Usuario';
-        }
-
-        if (perfilEmail) {
-            perfilEmail.textContent = usuario.correo || '';
         }
 
         console.log('Datos de usuario mostrados:', usuario);
@@ -83,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const targetSection = document.getElementById(sectionId);
         if (targetSection) {
+            console.log(targetSection)
             targetSection.classList.add('active');
             principalSection.style.display = 'none';
         }
@@ -271,9 +267,9 @@ document.addEventListener('DOMContentLoaded', function () {
         ) {
             e.preventDefault(); // evita comportamiento por defecto para controlar todo
 
-            const campoKilometraje = document.getElementById('kilometraje')
-            campoKilometraje.readOnly = false; // Hacer el campo editable
-            campoKilometraje.style.backgroundColor = ''; // Restaurar el color de fondo original
+            // const campoKilometraje = document.getElementById('kilometraje')
+            // campoKilometraje.readOnly = false; // Hacer el campo editable
+            // campoKilometraje.style.backgroundColor = ''; // Restaurar el color de fondo original
 
             document.querySelectorAll('form').forEach(form => {
                 form.reset();
