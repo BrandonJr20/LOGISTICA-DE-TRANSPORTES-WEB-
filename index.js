@@ -21,6 +21,7 @@ const authRoutes = require('./routes/authRoutes');
 const informacionRoutes = require('./routes/informacionRoutes');
 const entregaRoutes = require('./routes/entregasRoutes')
 const consumosRoutes = require('./routes/consumosRoutes')
+const incidentesRoutes = require('./routes/incidentesRoutes')
 
 // Middleware
 app.use(express.json());
@@ -47,6 +48,7 @@ app.use('/login', authRoutes);
 app.use('/informacion', informacionRoutes);
 app.use('/entregas', entregaRoutes)
 app.use('/consumos', consumosRoutes)
+app.use('/incidentes', incidentesRoutes)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

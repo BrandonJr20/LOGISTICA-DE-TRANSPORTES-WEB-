@@ -7,6 +7,8 @@
     <title>ADMINISTRADOR VIEW</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="public/css/adminEstilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -119,36 +121,51 @@
         <!-- SECCION DE USUARIOS -->
         <section id="usuarios">
             <!-- Formulario de Registro/Edición -->
-            <h2>Gestión de Usuarios</h2>
-            <form id="formUsuario">
-                <input type="hidden" id="id_usuario">
+            <dialog id="gestionUsuarios" class="modal">
+                <form id="formUsuario">
+                    <h2>Gestión de Usuarios</h2>
+                    <input type="hidden" id="id_usuario">
 
-                <label for="nombre_usuario">Nombre de Usuario:</label>
-                <input type="text" id="nombre_usuario" name="nombre_usuario" required>
+                    <div>
+                        <label for="nombre_usuario">Nombre de Usuario:</label>
+                        <input type="text" id="nombre_usuario" name="nombre_usuario" required>
+                    </div>
 
-                <label for="correo">Correo Electrónico:</label>
-                <input type="email" id="correo" name="correo" required>
+                    <div>
+                        <label for="correo">Correo Electrónico:</label>
+                        <input type="email" id="correo" name="correo" required>
+                    </div>
 
-                <label for="contrasena">Contraseña:</label>
-                <input type="text" id="contrasena" name="contrasena" required>
+                    <div>
+                        <label for="contrasena">Contraseña:</label>
+                        <input type="text" id="contrasena" name="contrasena" required>
+                    </div>
 
-                <label for="rol">Rol:</label>
-                <select id="rol" name="rol" required>
-                    <option value="">Selecciona un rol</option>
-                    <option value="admin">Administrador</option>
-                    <option value="conductor">Conductor</option>
-                </select>
+                    <div>
+                        <label for="rol">Rol:</label>
+                        <select id="rol" name="rol" required>
+                            <option value="">Selecciona un rol</option>
+                            <option value="admin">Administrador</option>
+                            <option value="conductor">Conductor</option>
+                        </select>
+                    </div>
 
-                <label for="activo">Activo:</label>
-                <select id="activo" name="activo" required>
-                    <option value="1">Habilitado</option>
-                    <option value="0">Inhabilitado</option>
-                </select>
+                    <div>
+                        <label for="activo">Activo:</label>
+                        <select id="activo" name="activo" required>
+                            <option value="1">Habilitado</option>
+                            <option value="0">Inhabilitado</option>
+                        </select>
+                    </div>
 
-                <button type="submit">Guardar Usuario</button>
-                <button type="reset" class="btnCancelar">Cancelar</button>
+                    <div>
+                        <button type="submit">Guardar Usuario</button>
+                        <button type="reset" class="btnCancelar">Cancelar</button>
+                    </div>
 
-            </form>
+                </form>
+            </dialog>
+            <button id="modalUsuarios" class="btnAbrirModal" data-tipo="usuarios">Registrar usuario</button>
 
             <!-- Tabla de Usuarios -->
             <div class="table-container">
@@ -174,39 +191,60 @@
         <section id="conductores" class="modulo">
 
             <!-- Formulario para crear/editar -->
-            <h2>Gestión de Conductores</h2>
-            <form id="formConductor">
-                <input type="hidden" id="id_conductor" name="id_conductor" />
-                <label for="id_usuario_conductor">ID Usuario:</label>
-                <input type="text" id="id_usuario_conductor" name="id_usuario" required />
+            <dialog id="gestionConductores" class="modal">
+                <form id="formConductor">
+                    <h2>Gestión de Conductores</h2>
+                    <input type="hidden" id="id_conductor" name="id_conductor" />
+                    <div>
+                        <label for="id_usuario_conductor">ID Usuario:</label>
+                        <input type="text" id="id_usuario_conductor" name="id_usuario" required />
+                    </div>
 
-                <label for="nombre_completo">Nombre Completo:</label>
-                <input type="text" id="nombre_completo" name="nombre_completo" maxlength="100" required />
+                    <div>
+                        <label for="nombre_completo">Nombre Completo:</label>
+                        <input type="text" id="nombre_completo" name="nombre_completo" maxlength="100" required />
+                    </div>
 
-                <label for="dui">DUI:</label>
-                <input type="text" id="dui" name="dui" maxlength="20" required />
+                    <div>
+                        <label for="dui">DUI:</label>
+                        <input type="text" id="dui" name="dui" maxlength="20" required />
+                    </div>
 
-                <label for="licencia">Licencia:</label>
-                <input type="text" id="licencia" name="licencia" maxlength="20" required />
+                    <div>
+                        <label for="licencia">Licencia:</label>
+                        <input type="text" id="licencia" name="licencia" maxlength="20" required />
+                    </div>
 
-                <label for="telefono">Teléfono:</label>
-                <input type="text" id="telefono" name="telefono" maxlength="20" required />
+                    <div>
+                        <label for="telefono">Teléfono:</label>
+                        <input type="text" id="telefono" name="telefono" maxlength="20" required />
+                    </div>
 
-                <label for="direccion">Dirección:</label>
-                <textarea id="direccion" name="direccion" rows="3" required></textarea>
+                    <div>
+                        <label for="direccion">Dirección:</label>
+                        <textarea id="direccion" name="direccion" rows="3" required></textarea>
+                    </div>
 
-                <label for="fecha_ingreso">Fecha de Ingreso:</label>
-                <input type="date" id="fecha_ingreso" name="fecha_ingreso" />
+                    <div>
+                        <label for="fecha_ingreso">Fecha de Ingreso:</label>
+                        <input type="date" id="fecha_ingreso" name="fecha_ingreso" />
+                    </div>
 
-                <label for="activo_conductor">Activo:</label>
-                <select id="activo_conductor" name="activo_conductor" required>
-                    <option value="1">Habilitado</option>
-                    <option value="0">Inhabilitado</option>
-                </select>
+                    <div>
+                        <label for="activo_conductor">Activo:</label>
+                        <select id="activo_conductor" name="activo_conductor" required>
+                            <option value="1">Habilitado</option>
+                            <option value="0">Inhabilitado</option>
+                        </select>
+                    </div>
 
-                <button type="submit">Guardar</button>
-                <button type="reset" class="btnCancelar">Cancelar</button>
-            </form>
+                    <div>
+                        <button type="submit">Guardar</button>
+                        <button type="reset" class="btnCancelar">Cancelar</button>
+                    </div>
+                </form>
+            </dialog>
+            <button id="modalConductores" class="btnAbrirModal" data-tipo="conductores">Registrar conductor</button>
 
             <!-- Tabla para mostrar conductores -->
             <div class="table-container">
@@ -236,48 +274,69 @@
         <section id="unidades">
 
             <!-- Formulario para editar/crear unidades-->
-            <h2>Gestión de Unidades</h2>
-            <form id="formVehiculo">
-                <input type="hidden" id="id_unidad" />
+            <dialog id="gestionUnidades" class="modal">
+                <form id="formVehiculo">
+                    <h2>Gestión de Unidades</h2>
+                    <input type="hidden" id="id_unidad" />
 
-                <label for="placa">Placa:</label>
-                <input type="text" id="placa" required />
+                    <div>
+                        <label for="placa">Placa:</label>
+                        <input type="text" id="placa" required />
+                    </div>
 
-                <label for="marca">Marca:</label>
-                <input type="text" id="marca" required />
+                    <div>
+                        <label for="marca">Marca:</label>
+                        <input type="text" id="marca" required />
+                    </div>
 
-                <label for="modelo">Modelo:</label>
-                <input type="text" id="modelo" required />
+                    <div>
+                        <label for="modelo">Modelo:</label>
+                        <input type="text" id="modelo" required />
+                    </div>
 
-                <label for="anio">Año:</label>
-                <input type="number" id="anio" required />
+                    <div>
+                        <label for="anio">Año:</label>
+                        <input type="number" id="anio" required />
+                    </div>
 
-                <label for="kilometraje">Kilometraje:</label>
-                <input type="number" id="kilometraje" required />
+                    <div>
+                        <label for="kilometraje">Kilometraje:</label>
+                        <input type="number" id="kilometraje" required />
+                    </div>
 
-                <label for="fecha_adquisicion">Fecha de Adquisición:</label>
-                <input type="date" id="fecha_adquisicion" required />
+                    <div>
+                        <label for="fecha_adquisicion">Fecha de Adquisición:</label>
+                        <input type="date" id="fecha_adquisicion" required />
+                    </div>
 
-                <label for="tipoUnidad">Tipo de Unidad:</label>
-                <select id="tipoUnidad" required>
-                    <option value="">Seleccione</option>
-                    <option value="B">Bus</option>
-                    <option value="C">Camión</option>
-                    <option value="A">Automóvil</option>
-                    <option value="M">Motocicleta</option>
-                </select>
+                    <div>
+                        <label for="tipoUnidad">Tipo de Unidad:</label>
+                        <select id="tipoUnidad" required>
+                            <option value="">Seleccione</option>
+                            <option value="B">Bus</option>
+                            <option value="C">Camión</option>
+                            <option value="A">Automóvil</option>
+                            <option value="M">Motocicleta</option>
+                        </select>
+                    </div>
 
-                <!-- Solo visible al editar -->
-                <label for="estado">Estado:</label>
-                <select id="estado_vehiculo">
-                    <option value="operativo">Operativo</option>
-                    <option value="en_mantenimiento">En mantenimiento</option>
-                    <option value="fuera_servicio">De baja</option>
-                </select>
+                    <!-- Solo visible al editar -->
+                    <div>
+                        <label for="estado">Estado:</label>
+                        <select id="estado_vehiculo">
+                            <option value="operativo">Operativo</option>
+                            <option value="en_mantenimiento">En mantenimiento</option>
+                            <option value="fuera_servicio">De baja</option>
+                        </select>
+                    </div>
 
-                <button type="submit">Guardar</button>
-                <button type="reset" class="btnCancelar">Cancelar</button>
-            </form>
+                    <div>
+                        <button type="submit">Guardar</button>
+                        <button type="reset" class="btnCancelar">Cancelar</button>
+                    </div>
+                </form>
+            </dialog>
+            <button id="modalUnidades" class="btnAbrirModal" data-tipo="unidades">Registrar unidades</button>
 
             <!-- Tabla -->
             <div class="table-container">
@@ -305,20 +364,23 @@
         <section id="asignaciones">
 
             <!-- Formulario para asignar unidad -->
-            <h2>Asignaciones</h2>
-            <form id="formAsignacion">
-                <label for="id_conductor">Conductor:</label>
-                <select id="id_conductor_asignacion" required></select>
+            <dialog id="gestionAsignaciones" class="modal">
+                <form id="formAsignacion">
+                    <h2>Asignaciones</h2>
+                    <label for="id_conductor">Conductor:</label>
+                    <select id="id_conductor_asignacion" required></select>
 
-                <label for="id_unidad">Unidad:</label>
-                <select id="id_unidad_asignacion" required></select>
+                    <label for="id_unidad">Unidad:</label>
+                    <select id="id_unidad_asignacion" required></select>
 
-                <label for="fecha_inicio">Fecha de Inicio:</label>
-                <input type="date" id="fecha_inicio" required>
+                    <label for="fecha_inicio">Fecha de Inicio:</label>
+                    <input type="date" id="fecha_inicio" required>
 
-                <button type="submit">Asignar Unidad</button>
-                <button type="reset" class="btnCancelar">Cancelar</button>
-            </form>
+                    <button type="submit">Asignar Unidad</button>
+                    <button type="reset" class="btnCancelar">Cancelar</button>
+                </form>
+            </dialog>
+            <button id="modalAsignaciones" class="btnAbrirModal" data-tipo="asignaciones">Registrar asignacion</button>
 
             <div class="table-container">
                 <table id="tablaActivas">
@@ -358,34 +420,44 @@
             <div class="formularios-container">
                 <!-- Formulario Asignar Mantenimiento -->
                 <div>
-                    <h3 style="text-align: center;">Asignar Mantenimiento</h3>
                     <form id="formAsignarMantenimiento">
+                        <h3 style="text-align: center;">Asignar Mantenimiento</h3>
 
-                        <label for="id_unidad_mantenimiento">Unidad:</label>
-                        <select id="id_unidad_mantenimiento" name="id_unidad" required>
-                            <option value="">Seleccione</option>
-                        </select>
+                        <div>
+                            <label for="id_unidad_mantenimiento">Unidad:</label>
+                            <select id="id_unidad_mantenimiento" name="id_unidad" required>
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
 
-                        <label for="id_tipomantenimiento">Tipo de Mantenimiento:</label>
-                        <select id="id_tipomantenimiento" name="id_tipomantenimiento" required>
-                            <option value="">Seleccione</option>
-                        </select>
+                        <div>
+                            <label for="id_tipomantenimiento">Tipo de Mantenimiento:</label>
+                            <select id="id_tipomantenimiento" name="id_tipomantenimiento" required>
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
 
-                        <label for="descripcion">Descripción:</label>
-                        <textarea id="descripcion" name="descripcion" rows="3"></textarea>
+                        <div>
+                            <label for="descripcion">Descripción:</label>
+                            <textarea id="descripcion" name="descripcion" rows="3"></textarea>
+                        </div>
 
-                        <label for="kilometraje_mantenimiento">Kilometraje:</label>
-                        <input type="number" id="kilometraje_mantenimiento" name="kilometraje" required>
+                        <div>
+                            <label for="kilometraje_mantenimiento">Kilometraje:</label>
+                            <input type="number" id="kilometraje_mantenimiento" name="kilometraje" required>
+                        </div>
 
-                        <button type="submit">Asignar</button>
-                        <button type="reset" class="btnCancelar">Cancelar</button>
+                        <div>
+                            <button type="submit">Asignar</button>
+                            <button type="reset" class="btnCancelar">Cancelar</button>
+                        </div>
                     </form>
                 </div>
 
                 <!-- Formulario Finalizar Mantenimiento -->
                 <div>
-                    <h3 style="text-align: center;">Finalizar Mantenimiento</h3>
                     <form id="formFinalizarMantenimiento">
+                        <h3 style="text-align: center;">Finalizar Mantenimiento</h3>
 
                         <label for="id_unidad_finalizar">Unidad:</label>
                         <select id="id_unidad_finalizar" name="unidadFinalizar" required>
@@ -427,33 +499,53 @@
             <h2>Gestión de Inventarios</h2>
 
             <!-- Formulario Agregar Productos -->
-            <form id="formInventarios">
-                <label for="nombre_insumo">Nombre:</label>
-                <input type="text" id="nombre_insumo" name="nombre_insumo" required>
+            <dialog id="gestionInventario" class="modal">
+                <form id="formInventarios">
+                    <h2>Registrar producto</h2>
+                    <div>
+                        <label for="nombre_insumo">Nombre:</label>
+                        <input type="text" id="nombre_insumo" name="nombre_insumo" required>
+                    </div>
 
-                <label for="tipo_producto">Tipo:</label>
-                <select name="tipo_producto" id="tipo_producto" required>
-                    <option value="">Seleccione</option>
-                </select>
+                    <div>
+                        <label for="tipo_producto">Tipo:</label>
+                        <select name="tipo_producto" id="tipo_producto" required>
+                            <option value="">Seleccione</option>
+                        </select>
+                    </div>
 
-                <label for="descripcion_producto">Descripción:</label>
-                <textarea id="descripcion_producto" name="descripcion_producto" rows="3"></textarea>
+                    <div>
+                        <label for="descripcion_producto">Descripción:</label>
+                        <textarea id="descripcion_producto" name="descripcion_producto" rows="3"></textarea>
+                    </div>
 
-                <label for="stock_actual">Stock Actual:</label>
-                <input type="number" id="stock_actual" name="stock_actual" required min="0">
+                    <div>
+                        <label for="stock_actual">Stock Actual:</label>
+                        <input type="number" id="stock_actual" name="stock_actual" required min="0">
+                    </div>
 
-                <label for="stock_minimo">Stock Mínimo:</label>
-                <input type="number" id="stock_minimo" name="stock_minimo" required min="0">
+                    <div>
+                        <label for="stock_minimo">Stock Mínimo:</label>
+                        <input type="number" id="stock_minimo" name="stock_minimo" required min="0">
+                    </div>
 
-                <label for="costo">Costo:</label>
-                <input type="number" id="costo" name="costo" step="0.01" required>
+                    <div>
+                        <label for="costo">Costo:</label>
+                        <input type="number" id="costo" name="costo" step="0.01" required>
+                    </div>
 
-                <label for="proveedor">Proveedor:</label>
-                <input type="text" id="proveedor" name="proveedor" required>
+                    <div>
+                        <label for="proveedor">Proveedor:</label>
+                        <input type="text" id="proveedor" name="proveedor" required>
+                    </div>
 
-                <button type="submit">Agregar Producto</button>
-                <button type="reset" class="btnCancelar">Cancelar</button>
-            </form>
+                    <div>
+                        <button type="submit">Agregar Producto</button>
+                        <button type="reset" class="btnCancelar">Cancelar</button>
+                    </div>
+                </form>
+            </dialog>
+            <button id="modalInventario" class="btnAbrirModal" data-tipo="inventario">Registrar inventario</button>
 
             <!-- Tabla de Inventarios -->
             <div class="table-container">
@@ -480,33 +572,48 @@
         <!-- SECCIÓN DE MOVIMIENTOS DE INVENTARIO -->
         <section id="movimientos-inventario">
             <!-- Formulario Registrar Movimiento -->
-            <h3>Registrar Movimiento</h3>
-            <form id="formMovimientoInventario">
+            <dialog id="gestionMovimientos" class="modal">
+                <form id="formMovimientoInventario">
+                    <h3>Registrar Movimiento</h3>
 
-                <label for="producto_movimiento">Producto/Insumo:</label>
-                <select id="producto_movimiento" name="id_insumo" required>
-                    <option value="">Seleccione</option>
-                </select>
+                    <div>
+                        <label for="producto_movimiento">Producto/Insumo:</label>
+                        <select id="producto_movimiento" name="id_insumo" required>
+                            <option value="">Seleccione</option>
+                        </select>
+                    </div>
 
-                <label for="tipo_movimiento">Tipo de Movimiento:</label>
-                <select id="tipo_movimiento" name="tipo_movimiento" required>
-                    <option value="">Seleccione</option>
-                    <option value="ENTRADA">Entrada</option>
-                    <option value="SALIDA">Salida</option>
-                </select>
+                    <div>
+                        <label for="tipo_movimiento">Tipo de Movimiento:</label>
+                        <select id="tipo_movimiento" name="tipo_movimiento" required>
+                            <option value="">Seleccione</option>
+                            <option value="ENTRADA">Entrada</option>
+                            <option value="SALIDA">Salida</option>
+                        </select>
+                    </div>
 
-                <label for="cantidad_movimiento">Cantidad:</label>
-                <input type="number" id="cantidad_movimiento" name="cantidad" required min="1">
+                    <div>
+                        <label for="cantidad_movimiento">Cantidad:</label>
+                        <input type="number" id="cantidad_movimiento" name="cantidad" required min="1">
+                    </div>
 
-                <label for="descripcion_movimiento">Descripción:</label>
-                <textarea id="descripcion_movimiento" name="descripcion" rows="3"></textarea>
+                    <div>
+                        <label for="descripcion_movimiento">Descripción:</label>
+                        <textarea id="descripcion_movimiento" name="descripcion" rows="3"></textarea>
+                    </div>
 
-                <label for="responsable_movimiento">Responsable:</label>
-                <input type="text" id="responsable_movimiento" name="responsable" required readonly>
+                    <div>
+                        <label for="responsable_movimiento">Responsable:</label>
+                        <input type="text" id="responsable_movimiento" name="responsable" required readonly>
+                    </div>
 
-                <button type="submit">Registrar Movimiento</button>
-                <button type="reset" class="btnCancelar">Cancelar</button>
-            </form>
+                    <div>
+                        <button type="submit">Registrar Movimiento</button>
+                        <button type="reset" class="btnCancelar">Cancelar</button>
+                    </div>
+                </form>
+            </dialog>
+            <button id="modalMovimientos" class="btnAbrirModal" data-tipo="movimientos">Registrar movimientos</button>
 
             <!-- Tabla Historial de Movimientos -->
             <div class="table-container">
@@ -531,16 +638,19 @@
         <section id="insumos-mantenimiento">
 
             <!-- Formulario Asignar Insumos -->
-            <h3>Asignar Insumos al Mantenimiento</h3>
-            <form id="formAsignarInsumos">
+            <dialog id="gestionInsumos" class="modal">
+                <form id="formAsignarInsumos">
+                    <h3>Asignar Insumos al Mantenimiento</h3>
 
-                <label for="id_mantenimiento_insumo">Mantenimiento Activo:</label>
-                <select id="id_mantenimiento_insumo" name="id_mantenimiento">
-                    <option value="">Seleccione</option>
-                </select>
+                    <div>
+                        <label for="id_mantenimiento_insumo">Mantenimiento Activo:</label>
+                        <select id="id_mantenimiento_insumo" name="id_mantenimiento">
+                            <option value="">Seleccione</option>
+                        </select>
+                    </div>
 
-                <!-- se carga con js -->
-                <!-- <label for="id_insumo_asignar">Insumo:</label>
+                    <!-- se carga con js -->
+                    <!-- <label for="id_insumo_asignar">Insumo:</label>
                 <select id="id_insumo_asignar" name="id_insumo" required>
                     <option value="">Seleccione</option>
                 </select>
@@ -548,15 +658,19 @@
                 <label for="cantidad_usada">Cantidad Usada:</label>
                 <input type="number" id="cantidad_usada" name="cantidad_usada" required min="1"> -->
 
-                <h4>Insumos a Utilizar</h4>
-                <div id="contenedor-insumos">
-                    <!-- Los insumos se agregan dinámicamente aquí -->
-                </div>
+                    <h4>Insumos a Utilizar</h4>
+                    <div id="contenedor-insumos">
+                        <!-- Los insumos se agregan dinámicamente aquí -->
+                    </div>
 
-                <button type="button" id="btnAgregarInsumo">+ Agregar Insumo</button>
-                <button type="submit">Asignar Insumo</button>
-                <button type="reset" class="btnCancelar">Cancelar</button>
-            </form>
+                    <div>
+                        <button type="button" id="btnAgregarInsumo">+ Agregar Insumo</button>
+                        <button type="submit">Asignar Insumo</button>
+                        <button type="reset" class="btnCancelar">Cancelar</button>
+                    </div>
+                </form>
+            </dialog>
+            <button id="modalInsumo" class="btnAbrirModal" data-tipo="insumos">Registrar Insumos</button>
 
             <div class="table-container">
                 <table id="tablaInsumosMantenimiento">
@@ -642,7 +756,7 @@
     <script src="public/js/insumoMantAdministrador.js"></script>
     <script src="public/js/dialogos.js"></script>
     <script src="public/js/formatearFecha.js"></script>
-
+    <script src="public/js/formularios.js"></script>
 </body>
 
 </html>

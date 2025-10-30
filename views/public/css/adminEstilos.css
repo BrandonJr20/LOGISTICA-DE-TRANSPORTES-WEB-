@@ -1,13 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
-/* @font-face {
-    font-family: 'Figtree';
-    src: url(assets/fonts/Figtree-VariableFont_wght.ttf) format('truetype');
-    font-weight: bolder;
-    font-style: normal;
-} */
-
-
 :root {
     --Naranja: #b34b0C;
     --Terracota: #7c3306;
@@ -32,34 +22,30 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: "Figtree", sans-serif;
+    font-family: "Montserrat", san-serif;
 }
 
 body {
     background-color: var(--colorAmarillo);
-    height: 100vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
 aside {
     background-color: var(--colorWhite);
-    padding: 3vw 1vw;
-    width: 350px;
-    transform: translateX(-100%);
+    transform: translate(-100%);
     transition: transform 0.3s ease;
     position: fixed;
     left: 0;
     top: 0;
-    height: 100vh;
-    z-index: 100;
-    font-size: 20px;
+    z-index: 1000;
     border-radius: 0 10px 10px 0;
     overflow-y: auto;
     scrollbar-width: none;
+    scroll-behavior: smooth;
     box-shadow: var(--sombra);
 }
 
@@ -76,10 +62,6 @@ aside.active {
     border-radius: 20px;
     object-fit: cover;
     border: 3px solid black;
-    margin: 1vw 0;
-    padding: 4px;
-    width: 10vw;
-    height: 10%;
 }
 
 aside ul {
@@ -88,7 +70,7 @@ aside ul {
 }
 
 aside ul li {
-    margin: 15px 0;
+    margin: 2vw 0;
 }
 
 aside ul li a {
@@ -98,7 +80,7 @@ aside ul li a {
     display: block;
     padding: 10px;
     border-radius: 5px;
-    transition: background-color 0.3s, box-shadow 0.3s, color 0.5s;
+    transition: background-color 0.3s ease, box-shadow 0.3s, color 0.5s ease;
     box-shadow: 4px 6px 0.5px 2px;
 }
 
@@ -108,12 +90,22 @@ aside ul li a:hover {
     box-shadow: none
 }
 
-/* Estilos para las cards */
-#principal {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin: 5vw;
+.menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 101;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--sombra);
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 #principal a {
@@ -129,10 +121,8 @@ cards {
     background: white;
     border: 1px solid var(--gris);
     border-radius: 10px;
-    padding: 30px 20px;
     box-shadow: var(--sombra);
     transition: transform 0.3s, box-shadow 0.3s;
-    height: 150px;
 }
 
 cards i {
@@ -173,27 +163,7 @@ section {
     justify-content: center;
 }
 
-/* Botón para mostrar/ocultar aside */
-.menu-toggle {
-    width: 60px;
-    height: 60px;
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: white;
-    color: black;
-    border: none;
-    border-radius: 25px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    z-index: 101;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--sombra);
-    transition: background-color 0.3s, transform 0.3s;
-}
-
+/* Estilos para formulario */
 .formularios-container {
     display: flex;
     justify-content: center;
@@ -203,45 +173,39 @@ section {
 
 
 form {
-    max-height: 15vw;
     display: grid;
     background-color: var(--colorGrey);
-    border: 2px solid black;
-    box-shadow: var(--sombra);
-    grid-template-columns: repeat(4, 1fr);
     gap: 1vw;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
     padding: 2vw;
-    margin-bottom: 2vw;
-    
+    margin: 2vw;
+
     overflow: auto;
     scrollbar-width: none;
 }
 
+form > div{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 form h2 {
-    grid-column-start: 1;
-    grid-column-end: 3;
-    font-size: 40px;
     text-align: center;
-    margin: 1vw 0;
 }
 
 form h3 {
-    grid-column-start: 1;
-    grid-column-end: 3;
-    font-size: 25px;
     text-align: center;
-    margin: 1vw 0;
 }
 
 input,
 select,
 button {
     border-radius: 5px;
-    padding: 5px 20px;
 }
 
 button {
@@ -252,31 +216,32 @@ button {
     transition: transform 0.4s;
 }
 
-button[type='Submit'], .btnAceptar {
+button[type='Submit'],
+.btnAceptar {
     background-color: var(--colorVerde);
-
     box-shadow: var(--sombra);
     border: 2px solid black;
+    width: 100%;
 }
 
 button[type='reset'] {
     background-color: var(--colorRojo);
-
-
+    width: 100%;
     box-shadow: var(--sombra);
     border: 2px solid black;
 }
 
 .editar {
     background-color: var(--colorAzul);
-
     box-shadow: var(--sombra);
     border: 2px solid black;
 }
 
-.eliminar, .btnCancelar, .finalizar {
+.eliminar,
+.btnCancelar,
+.finalizar {
+    width: 100%;
     background-color: var(--colorRojo);
-
     box-shadow: var(--sombra);
     border: 2px solid black;
 }
@@ -296,147 +261,166 @@ button:hover {
     cursor: pointer;
 }
 
-/* Estilo general de tablas */
-.table-container {
-    width: 100%;
-    height: 50%;
-    overflow: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--colorWhite) var(--colorAmarillo);
-    scroll-behavior: smooth;
-
-    box-shadow: var(--sombra);
-    border: 2px solid black;
-}
-
-table {
-    min-width: 600px;
-    /* fuerza el scroll horizontal */
-    width: 100%;
-    border-collapse: collapse;
-}
-
-/* Encabezado */
-thead {
-    background-color: var(--colorAmarillo);
-    color: black;
-    border-bottom: 3px solid black;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-
-/* Celdas */
-th,
-td {
-    padding: 0.5rem 1rem;
-    text-align: left;
-    border-bottom: 1px solid #e0e0e0;
-    white-space: nowrap;
-    min-height: 60px;
-    /* alto fijo */
-}
-
-/* Hover para filas */
-tbody tr:hover {
-    background-color: #f1f9ff;
-}
-
-/* Última fila sin borde inferior */
-tbody tr:last-child td {
-    border-bottom: none;
-}
-
-tbody tr td:last-child button {
-    margin-right: 1vw;
-}
-
-.alertas {
-    border: 2px solid black;
-    background-color: var(--colorWhite);
-    border-radius: 10px;
-    box-shadow: var(--sombra);
-    padding: 1.5rem;
-    text-align: center;
-    width: 300px;
-    position: fixed;
+/* estilo para alerta */
+.modal {
+    width: max-content;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    animation: aparecer 0.1s ease-out;
-
-    .cerrar-alerta::picker{
-        animation: aparecer 2s ease-out;
-    }
+    border-radius: 25px;
+    overflow: auto;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    animation: aparecer 0.2s forwards;
 }
 
-.alertas::backdrop {
-    background: rgba(0, 0, 0, 0.4);
-}
-
-.contenido-alerta {
-    position: relative;
-}
-
-.cerrar-alerta {
-    display: none;
-}
-
-.acciones-alerta {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-/* Cuando se está cerrando */
-.alertas.cerrando {
-    animation: desaparecer 0.2s ease-in forwards;
-}
-
-
-@keyframes aparecer {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -48%) scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
-
-@keyframes desaparecer {
-    from {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-    to {
-        opacity: 0;
-        transform: translate(-50%, -48%) scale(0.9);
-    }
-}
-
-@keyframes skeleton {
-    0% {
-        background-color: hsl(216.92 15.29% 83.33% / 0.40);
+@media (min-width: 1024px) {
+    body {
+        height: 100vh;
     }
 
-    100% {
-        background-color: hsl(210 13.79% 88.63% / 0.30);
+    aside {
+        padding: 3vw 2vw;
+        width: 350px;
+        height: 100vh;
+        font-size: 20px;
+        font-weight: 500;
     }
+
+    .perfil img {
+        margin: 1vw 0;
+        padding: 4px;
+        width: 10em;
+        height: 100%;
+    }
+
+    .menu-toggle {
+        width: 60px;
+        height: 60px;
+    }
+
+    #principal {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin: 5vw;
+    }
+
+    cards {
+        padding: 2vw 1vw;
+    }
+
+    form {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    form h2 {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
+    form h3 {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
+
 }
 
-@keyframes bordeNaranja {
-    0% {
-        border: 1px solid var(--gris);
+@media (max-width: 1023px) {
+    body {
+        height: 100vh;
     }
 
-    50% {
-        border: 2px solid var(--Naranja);
+    aside {
+        padding: 3vw 2vw;
+        width: 350px;
+        height: 100vh;
+        font-size: 20px;
+        font-weight: 500;
     }
 
-    100% {
-        border: 1px solid var(--Terracota);
+    .perfil img {
+        margin: 1vw 0;
+        padding: 4px;
+        width: 10em;
+        height: 100%;
+    }
+
+    .menu-toggle {
+        width: 60px;
+        height: 60px;
+    }
+
+    #principal {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        margin: 5vw;
+    }
+
+    cards {
+        text-align: center;
+        padding: 2vw 0;
+    }
+
+
+}
+
+@media (max-width: 460px) {
+    body {
+        height: 100%;
+        font-size: 9px;
+        overflow-y: auto;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+    }
+
+    aside {
+        font-size: 11px;
+        padding: 3vw 5vw;
+        width: 200px;
+        height: 100vh;
+        font-weight: 500;
+    }
+
+    aside ul li {
+        margin-bottom: 2vh;
+    }
+
+    .perfil img {
+        margin: 1vw 0;
+        padding: 4px;
+        width: 10em;
+        height: 100%;
+    }
+
+    .menu-toggle {
+        border-radius: 10px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .menu-toggle i {
+        font-size: 15px;
+    }
+
+    #principal {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 30px;
+        margin: 15vw;
+    }
+
+    cards {
+        padding: 1vw 1vw;
+        width: 200px;
+        height: 100px;
+        font-size: 9px;
+    }
+
+    cards i {
+        text-align: center;
+        font-size: 3rem;
     }
 }
